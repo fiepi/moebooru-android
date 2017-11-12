@@ -1,0 +1,44 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/colorWindowBackground</item>
+        <item name="android:windowShowWallpaper">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@android:color/transparent</item>
+        <item name="toolbarStyle">@style/ToolbarTheme</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
+
+        <!--透明状态栏-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--透明导航栏-->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!--使状态栏，导航栏可绘制-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/Widget.AppCompat.Toolbar">
+        <!--<item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>-->
+        <item name="android:background">#00000000</item>
+        <!--<item name="contentInsetStart">72.0dip</item>-->
+        <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+    </style>
+
+    <style name="Theme.Dialog.Alert" parent="@style/Theme.AppCompat.Dialog.Alert">
+        <item name="android:textColorPrimary">#ffffffff</item>
+        <item name="android:colorAccent">#ffffffff</item>
+    </style>
+
+    <style name="DetailTheme" parent="Theme.AppCompat.NoActionBar">
+        <!--透明状态栏-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--透明导航栏-->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!--使状态栏，导航栏可绘制-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+</resources>
