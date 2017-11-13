@@ -1,10 +1,6 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/colorWindowBackground</item>
-        <item name="android:windowShowWallpaper">false</item>
-        <item name="windowActionModeOverlay">true</item>
         <item name="actionModeBackground">@android:color/transparent</item>
         <item name="toolbarStyle">@style/ToolbarTheme</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -27,7 +23,7 @@
         <!--<item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>-->
         <item name="android:background">#00000000</item>
         <!--<item name="contentInsetStart">72.0dip</item>-->
-        <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <!--<item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>-->
     </style>
 
     <style name="Theme.Dialog.Alert" parent="@style/Theme.AppCompat.Dialog.Alert">

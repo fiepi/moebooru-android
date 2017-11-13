@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/toolbar_padding_top"
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tb_top"
+        app:layout_scrollFlags="scroll|enterAlways"
         android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:theme="@style/ToolbarTheme">
@@ -25,4 +24,4 @@
 
     </android.support.v7.widget.Toolbar>
 
-</LinearLayout>
+</android.support.design.widget.AppBarLayout>
