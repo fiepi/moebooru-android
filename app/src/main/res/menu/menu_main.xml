@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MoebooruActivity">
+    <item
+        android:title="Search"
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="@string/menu_settings"
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:title="@string/menu_about_me"
+        android:id="@+id/action_about"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+</menu>

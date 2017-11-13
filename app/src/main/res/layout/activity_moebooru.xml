@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="@dimen/toolbar_padding_top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/statusbar_padding"
     tools:context=".MoebooruActivity">
+    <android.support.v4.widget.SwipeRefreshLayout android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <include layout="@layout/view_post_layout"></include>
 
+    </android.support.v4.widget.SwipeRefreshLayout>
     <include layout="@layout/toolbar_top_layout"></include>
-    <include layout="@layout/view_post_layout">
-    </include>
 </android.support.design.widget.CoordinatorLayout>

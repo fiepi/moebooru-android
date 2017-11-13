@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="posts_padding">4dip</dimen>
-    <dimen name="toolbar_padding_top">25dp</dimen>
+    <dimen name="statusbar_padding">24dp</dimen>
+    <dimen name="text_left_padding">8dp</dimen>
+    <dimen name="text_main">13sp</dimen>
 </resources>
 

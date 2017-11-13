@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#ffffffff</color>
+    <color name="colorAccent">#ffff4444</color>
     <color name="colorFavorite">#fff46256</color>
     <color name="colorMoebooru">#ffeaa9b1</color>
 
@@ -10,4 +10,6 @@
 
     <color name="colorBackgroundDark">#ff151824</color>
     <color name="colorTextID">#ffffaaae</color>
+    <color name="colorTextSize">#b9babe</color>
+    <color name="primary_text_default_material_light">#de000000</color>
 </resources>

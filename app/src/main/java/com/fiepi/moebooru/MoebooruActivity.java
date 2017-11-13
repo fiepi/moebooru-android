@@ -1,5 +1,6 @@
 package com.fiepi.moebooru;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +8,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.fiepi.moebooru.adapter.PostsAdapter;
 import com.fiepi.moebooru.api.PostsAPI;
@@ -26,10 +31,19 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
 
     private List<PostBean> postBeans = new ArrayList<>();
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moebooru);
+
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION );
+//        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+
+        initToolbar();
         initSwipeRefreshLayout();
     }
 
@@ -39,6 +53,22 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
             PullPosts pullPosts = new PullPosts();
             pullPosts.execute();
         }
+    }
+
+    //设置右上角的填充菜单
+    private void initToolbar(){
+        toolbar = (Toolbar) findViewById(R.id.tb_top);
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int menuItemId = item.getItemId();
+                if (menuItemId == R.id.action_search){
+                    Toast.makeText(MoebooruActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
     }
 
     private void initSwipeRefreshLayout(){
@@ -54,7 +84,10 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
     }
 
     private void initData(){
-        layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        //网格
+        layoutManager = new GridLayoutManager(this, 3, OrientationHelper.VERTICAL, false);
+        //瀑布流
+        //layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         adapter = new PostsAdapter(getData());
     }
     private List<PostBean> getData(){
@@ -67,7 +100,7 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
         protected List<PostBean> doInBackground(Integer... integers) {
             PostsAPI postsAPI = new PostsAPI();
 
-            return postsAPI.getPosts(20,1,"matthew_kyrielite","https://konachan.com/post.json");
+            return postsAPI.getPosts(30,1,"matthew_kyrielite","https://konachan.com/post.json");
         }
 
         @Override
@@ -92,5 +125,11 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
                 initView();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }
