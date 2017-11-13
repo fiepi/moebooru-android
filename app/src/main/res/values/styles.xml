@@ -12,8 +12,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
 
+        <!--布局时是否考虑给系统窗口留出空间，true为留出空间，bug，布局中的Padding会失效-->
+        <item name="android:fitsSystemWindows">false</item>
+
         <!--透明状态栏-->
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <!--透明导航栏-->
         <item name="android:windowTranslucentNavigation">true</item>
         <!--使状态栏，导航栏可绘制-->

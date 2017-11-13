@@ -38,7 +38,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsHolder>{
 
     @Override
     public void onBindViewHolder(PostsHolder holder, int position) {
-        holder.tvPostsID.setText(String.valueOf(this.postBeans.get(position).getId()));
+        holder.tvPostsID.setText("#"+String.valueOf(this.postBeans.get(position).getId()));
         Glide.with(holder.ivPosts.getContext())
                 .load(this.postBeans.get(position).getPreview_url())
                 .into(holder.ivPosts);

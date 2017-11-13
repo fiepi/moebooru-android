@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 
 import com.fiepi.moebooru.adapter.PostsAdapter;
@@ -53,7 +54,7 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
     }
 
     private void initData(){
-        layoutManager = new GridLayoutManager(this, 3, OrientationHelper.VERTICAL,false);
+        layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         adapter = new PostsAdapter(getData());
     }
     private List<PostBean> getData(){

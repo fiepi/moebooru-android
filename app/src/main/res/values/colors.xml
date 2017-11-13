@@ -8,6 +8,6 @@
     <color name="colorPrimaryDark">#ff23283c</color>
     <color name="colorWindowBackground">@color/colorPrimaryDark</color>
 
-    <color name="colorCardBackground">#ff151824</color>
+    <color name="colorBackgroundDark">#ff151824</color>
     <color name="colorTextID">#ffffaaae</color>
 </resources>
