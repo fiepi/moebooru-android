@@ -1,19 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/post_grid_item_padding"
-    card_view:contentPadding="3dp"
-    card_view:cardCornerRadius="2dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.bm.library.PhotoView
-            android:id="@+id/pv_posts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+<!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:app="http://schemas.android.com/tools"-->
+    <!--android:padding="@dimen/posts_card_padding"-->
+    <!--card_view:cardCornerRadius="2dp"-->
+    <!--app:cardBackgroundColor="@color/colorCardBackground"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:ignore="NamespaceTypo">-->
+    <!---->
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-</android.support.v7.widget.CardView>
+        <!--<com.bm.library.PhotoView-->
+            <!--android:id="@+id/pv_posts"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_posts_id"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/colorTextID"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
+
+<!--</android.support.v7.widget.CardView>-->
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/iv_posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:id="@+id/tv_posts_id"
+        android:gravity="center"
+        android:textColor="@color/colorTextID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

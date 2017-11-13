@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="post_grid_item_padding">4.0dip</dimen>
+    <dimen name="posts_card_padding">4.0dip</dimen>
     <dimen name="toolbar_padding_top">25dp</dimen>
 </resources>
 

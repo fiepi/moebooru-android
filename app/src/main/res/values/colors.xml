@@ -7,4 +7,7 @@
     <color name="colorPrimary">#ff434e74</color>
     <color name="colorPrimaryDark">#ff23283c</color>
     <color name="colorWindowBackground">@color/colorPrimaryDark</color>
+
+    <color name="colorCardBackground">#ff151824</color>
+    <color name="colorTextID">#ffffaaae</color>
 </resources>
