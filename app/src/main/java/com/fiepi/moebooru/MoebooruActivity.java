@@ -1,5 +1,6 @@
 package com.fiepi.moebooru;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,11 +19,13 @@ import android.widget.Toast;
 import com.fiepi.moebooru.adapter.PostsAdapter;
 import com.fiepi.moebooru.api.PostsAPI;
 import com.fiepi.moebooru.bean.PostBean;
+import com.fiepi.moebooru.utils.FileUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MoebooruActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
@@ -45,14 +48,7 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
 
         initToolbar();
         initSwipeRefreshLayout();
-    }
-
-    @Override
-    public void onRefresh() {
-        if (swipeRefreshLayout.isRefreshing()){
-            PullPosts pullPosts = new PullPosts();
-            pullPosts.execute();
-        }
+        pullCachePosts();
     }
 
     //设置右上角的填充菜单
@@ -65,7 +61,13 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
                 int menuItemId = item.getItemId();
                 if (menuItemId == R.id.action_search){
                     Toast.makeText(MoebooruActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                }else if (menuItemId == R.id.action_settings){
+                    startActivity(new Intent(MoebooruActivity.this, SettingsActivity.class));
+                }else if (menuItemId == R.id.action_about){
+                    Toast.makeText(MoebooruActivity.this, "About", Toast.LENGTH_SHORT).show();
                 }
+
+
                 return false;
             }
         });
@@ -73,8 +75,28 @@ public class MoebooruActivity extends AppCompatActivity implements SwipeRefreshL
 
     private void initSwipeRefreshLayout(){
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorMoebooru, R.color.colorPrimary, R.color.colorFavorite);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (swipeRefreshLayout.isRefreshing()){
+                    PullPosts pullPosts = new PullPosts();
+                    pullPosts.execute();
+                }
+            }
+        });
+    }
+
+    private void pullCachePosts(){
+        try {
+            postBeans = new FileUtils().getPostBeanFromFile();
+            if (!postBeans.isEmpty()){
+                initData();
+                initView();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initView(){

@@ -4,10 +4,13 @@ import android.util.Log;
 
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.bean.TagBean;
+import com.fiepi.moebooru.utils.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class PostsAPI {
                 .add("page", String.valueOf(page))
                 .add("tags", tags)
                 .build();
-        returnPostList = getPostBean(sendRequest(requestBody));
+        returnPostList = getPostBean(getRawPostBean(sendRequest(requestBody)));
         if (returnPostList.isEmpty()){
             Log.i("getPosts","结果为空");
             return null;
@@ -78,58 +81,68 @@ public class PostsAPI {
         return null;
     }
 
-    private List<PostBean> getPostBean(Reader reader){
+    public List<PostBean> getPostBean(List<RawPostBean> rawPostBeans){
 
-        List<PostBean> postBeanList = new ArrayList<>();
+        for (RawPostBean rawPostBean : rawPostBeans){
+            PostBean postBean = new PostBean();
+            postBean.setId(rawPostBean.id);
+            postBean.setCreated_at(rawPostBean.created_at * 1000);
+            postBean.setCreator_id(rawPostBean.creator_id);
+            postBean.setAuthor(rawPostBean.author);
+            postBean.setSource(rawPostBean.source);
+            postBean.setMd5(rawPostBean.md5);
+            postBean.setScore(rawPostBean.score);
+            postBean.setRating(rawPostBean.rating);
+            postBean.setHas_children(rawPostBean.has_children);
+            postBean.setParent_id(rawPostBean.parent_id);
+            postBean.setStatus(rawPostBean.status);
+            postBean.setWidth(rawPostBean.width);
+            postBean.setHeight(rawPostBean.height);
+            postBean.setFile_size(rawPostBean.file_size);
+            postBean.setFile_url(rawPostBean.file_url);
+            postBean.setPreview_url(rawPostBean.preview_url);
+            postBean.setPreview_height(rawPostBean.actual_preview_height);
+            postBean.setPreview_width(rawPostBean.actual_preview_width);
+            postBean.setJpeg_url(rawPostBean.jpeg_url);
+            postBean.setJpeg_height(rawPostBean.jpeg_height);
+            postBean.setJpeg_width(rawPostBean.jpeg_width);
+            postBean.setJpeg_file_size(rawPostBean.jpeg_file_size);
+            postBean.setSample_file_size(rawPostBean.sample_file_size);
+            postBean.setSample_url(rawPostBean.sample_url);
+            postBean.setSample_height(rawPostBean.sample_height);
+            postBean.setSample_width(rawPostBean.sample_width);
+
+            List tagsList = new ArrayList();
+            for (String tag : rawPostBean.tags.split(" ")){
+                TagBean tagBean = new TagBean();
+                tagBean.setName(tag);
+                tagsList.add(tagBean);
+            }
+            postBean.setTags(tagsList);
+
+            returnPostList.add(postBean);
+        }
+
+        return returnPostList;
+
+    }
+
+    private List<RawPostBean> getRawPostBean(Reader reader){
+
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = jsonParser.parse(reader).getAsJsonArray();
+        String string = jsonArray.toString();
         if (!jsonArray.isJsonNull()){
+            //保存 json 供下次打开时读取缓存中的图片
+            new FileUtils().saveJson(string);
+            //转换为 List<RawPostBean>
             for (JsonElement post : jsonArray){
                 RawPostBean rawPostBean = gson.fromJson(post, RawPostBean.class);
                 rawPostBeans.add(rawPostBean);
             }
-            for (RawPostBean rawPostBean : rawPostBeans){
-                PostBean postBean = new PostBean();
-                postBean.setId(rawPostBean.id);
-                postBean.setCreated_at(rawPostBean.created_at * 1000);
-                postBean.setCreator_id(rawPostBean.creator_id);
-                postBean.setAuthor(rawPostBean.author);
-                postBean.setSource(rawPostBean.source);
-                postBean.setMd5(rawPostBean.md5);
-                postBean.setScore(rawPostBean.score);
-                postBean.setRating(rawPostBean.rating);
-                postBean.setHas_children(rawPostBean.has_children);
-                postBean.setParent_id(rawPostBean.parent_id);
-                postBean.setStatus(rawPostBean.status);
-                postBean.setWidth(rawPostBean.width);
-                postBean.setHeight(rawPostBean.height);
-                postBean.setFile_size(rawPostBean.file_size);
-                postBean.setFile_url(rawPostBean.file_url);
-                postBean.setPreview_url(rawPostBean.preview_url);
-                postBean.setPreview_height(rawPostBean.actual_preview_height);
-                postBean.setPreview_width(rawPostBean.actual_preview_width);
-                postBean.setJpeg_url(rawPostBean.jpeg_url);
-                postBean.setJpeg_height(rawPostBean.jpeg_height);
-                postBean.setJpeg_width(rawPostBean.jpeg_width);
-                postBean.setJpeg_file_size(rawPostBean.jpeg_file_size);
-                postBean.setSample_file_size(rawPostBean.sample_file_size);
-                postBean.setSample_url(rawPostBean.sample_url);
-                postBean.setSample_height(rawPostBean.sample_height);
-                postBean.setSample_width(rawPostBean.sample_width);
 
-                List tagsList = new ArrayList();
-                for (String tag : rawPostBean.tags.split(" ")){
-                    TagBean tagBean = new TagBean();
-                    tagBean.setName(tag);
-                    tagsList.add(tagBean);
-                }
-
-                postBean.setTags(tagsList);
-                postBeanList.add(postBean);
-
-            }
 //        Log.i("TAGS", String.valueOf(postBeanList.get(0).getTags().size()));
-            return postBeanList;
+            return rawPostBeans;
         }
         Log.i("getPostBean","结果为空");
         return null;

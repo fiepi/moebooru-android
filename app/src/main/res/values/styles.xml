@@ -25,11 +25,11 @@
         <item name="android:colorForeground">@android:color/white</item>
         <!--<item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</ixxxxxxxtem>-->
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:listMenuViewStyle">@style/ListMenuStyle</item>
+        <!--<item name="android:listMenuViewStyle">@style/ListMenuStyle</item>-->
         <!--<item name="contentInsetStart">72.0dip</item>-->
         <item name="android:popupTheme">@style/PopupTheme</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
+        <!--<item name="actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>-->
     </style>
     <style name="ActionOverflowButtonStyle">
         <item name="android:src">@drawable/ic_more_vert_white_24dp</item>

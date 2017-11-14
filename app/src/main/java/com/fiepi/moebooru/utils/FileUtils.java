@@ -1,7 +1,10 @@
 package com.fiepi.moebooru.utils;
 
+import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
+import com.fiepi.moebooru.api.PostsAPI;
 import com.fiepi.moebooru.api.RawPostBean;
 import com.fiepi.moebooru.bean.PostBean;
 import com.google.gson.Gson;
@@ -12,9 +15,13 @@ import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +30,29 @@ import java.util.List;
  */
 
 public class FileUtils {
-    public Context context;
+    private String fileName = "posts.json";
 
-    public FileUtils(Context context){
-        this.context = context;
+    public FileUtils(){
     }
 
+    public List<PostBean> getPostBeanFromFile() throws IOException {
+        return new PostsAPI().getPostBean(getRawPostBeanFromFile());
+    }
 
-    public List<RawPostBean> getJson(String name) throws IOException {
-        String string = new String();
-        string = name;
+    public void saveJson(String json){
+        try (OutputStream outputStream = new FileOutputStream(getFile())) {
+            outputStream.write(json.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private List<RawPostBean> getRawPostBeanFromFile() throws IOException {
         JsonParser jsonParser = new JsonParser();
-        JsonArray jsonArray = jsonParser.parse(readFile(getFile(string))).getAsJsonArray();
+        JsonArray jsonArray = jsonParser.parse(readFile(getFile())).getAsJsonArray();
         Gson gson = new Gson();
         List<RawPostBean> posts = new ArrayList<RawPostBean>();
         for (JsonElement post : jsonArray){
@@ -62,9 +80,26 @@ public class FileUtils {
         FileUtils.readToBuffer(sb, file);
         return sb.toString();
     }
-    private File getFile(String name){
-        String fileName = name+".json";
-        File file = new File(this.context.getFilesDir(), fileName);
+    private File getFile(){
+        File file = new File( getContext().getFilesDir(), fileName);
         return file;
+    }
+
+    private Context getContext(){
+        try {
+            Application application = (Application) Class.forName("android.app.AppGlobals").getMethod("getInitialApplication").invoke(null, (Object[]) null);
+            return application.getApplicationContext();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("getContext", "application.getApplicationContext() 大失败!");
+        return null;
     }
 }
