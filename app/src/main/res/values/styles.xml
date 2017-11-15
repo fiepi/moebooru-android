@@ -1,58 +1,30 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/colorWindowBackground</item>
-        <item name="actionModeBackground">@android:color/transparent</item>
-        <item name="toolbarStyle">@style/ToolbarTheme</item>
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:textColorPrimaryInverse">@color/primary_text_material_light</item>
 
-        <!--&lt;!&ndash;布局时是否考虑给系统窗口留出空间，true为留出空间，bug，布局中的Padding会失效&ndash;&gt;-->
+        <!--布局时是否考虑给系统窗口留出空间，true为留出空间，bug，布局中的Padding会失效-->
         <!--<item name="android:fitsSystemWindows">false</item>-->
-
-        <!--&lt;!&ndash;透明状态栏&ndash;&gt;-->
+        <!--透明状态栏-->
         <!--<item name="android:windowTranslucentStatus">false</item>-->
-        <!--&lt;!&ndash;透明导航栏&ndash;&gt;-->
+        <!--透明导航栏-->
         <!--<item name="android:windowTranslucentNavigation">true</item>-->
-        <!--&lt;!&ndash;&lt;!&ndash;使状态栏，导航栏可绘制&ndash;&gt;&ndash;&gt;-->
+        <!--使状态栏，导航栏可绘制-->
         <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
     </style>
 
-    <style name="ToolbarTheme" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="android:colorForeground">@android:color/white</item>
-        <!--<item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</ixxxxxxxtem>-->
-        <item name="android:background">@android:color/transparent</item>
-        <!--<item name="android:listMenuViewStyle">@style/ListMenuStyle</item>-->
-        <!--<item name="contentInsetStart">72.0dip</item>-->
-        <item name="android:popupTheme">@style/PopupTheme</item>
-        <item name="android:textColor">@android:color/white</item>
-        <!--<item name="actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>-->
-    </style>
-    <style name="ActionOverflowButtonStyle">
-        <item name="android:src">@drawable/ic_more_vert_white_24dp</item>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ListMenuStyle" parent="@style/TextAppearance.AppCompat.Menu"></style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="PopupTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:background">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="Theme.Dialog.Alert" parent="@style/Theme.AppCompat.Dialog.Alert">
-        <item name="android:textColorPrimary">#ffffffff</item>
-        <item name="android:colorAccent">#ffffffff</item>
-    </style>
-
-    <style name="DetailTheme" parent="Theme.AppCompat.NoActionBar">
-        <!--透明状态栏-->
-        <item name="android:windowTranslucentStatus">true</item>
-        <!--透明导航栏-->
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!--使状态栏，导航栏可绘制-->
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

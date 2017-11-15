@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+    <color name="colorPrimary">#ff65212c</color>
+    <color name="colorPrimaryDark">#ff41182a</color>
+    <color name="colorBackground">#ff222222</color>
+
     <color name="colorAccent">#ffff4444</color>
     <color name="colorFavorite">#fff46256</color>
     <color name="colorMoebooru">#ffeaa9b1</color>
-
-    <color name="colorPrimary">#ff434e74</color>
-    <color name="colorPrimaryDark">#ff23283c</color>
-    <color name="colorWindowBackground">@color/colorPrimaryDark</color>
+    <color name="transparent">@android:color/transparent</color>
 
     <color name="colorBackgroundDark">#ff151824</color>
     <color name="colorTextID">#ffffaaae</color>
     <color name="colorTextSize">#b9babe</color>
     <color name="primary_text_default_material_light">#de000000</color>
+
+    <color name="colorBlueGrey">#ff6e8198</color>
+    <color name="colorGrey300">#ffe0e0e0</color>
 </resources>
