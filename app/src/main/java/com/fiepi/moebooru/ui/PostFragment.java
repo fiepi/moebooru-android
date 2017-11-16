@@ -28,6 +28,12 @@ public class PostFragment extends Fragment {
     private static final int SPAN_COUNT = 3;
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
+
+    private Integer mPAGE = 1;
+    private Integer mLIMIT = 20;
+    private String mTAGS = "null";
+    private String mURL = "https://konachan.com/post.json";
+
     private OnPostFragmentInteractionListener mListener;
 
     private RecyclerView mRecyclerView;
@@ -83,6 +89,14 @@ public class PostFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         initRefreshListener();
         pullCachePosts();
+        mRecyclerView.setOnScrollListener(new OnRcvScrollListener(){
+            @Override
+            public void onBottom() {
+                super.onBottom();
+                Log.i(TAG,"加载更多");
+                    loadMore();
+                }
+        });
     }
 
     private void initRefreshListener(){
@@ -95,6 +109,15 @@ public class PostFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void loadMore(){
+        if (mPullPostTask == null || mPullPostTask.getStatus() == AsyncTask.Status.FINISHED){
+            mPAGE = mPAGE + 1;
+            Log.i(TAG, "页码:"+mPAGE);
+            mPullPostTask = new PullPost(1);
+            mPullPostTask.execute();
+        }
     }
 
     @Override
@@ -131,7 +154,7 @@ public class PostFragment extends Fragment {
             if (isCancelled()){
                 return null;
             }
-            return new GetPost().getPosts(20, 1, "null", "https://konachan.com/post.json");
+            return new GetPost().getPosts(mLIMIT, mPAGE, mTAGS, mURL);
         }
         @Override
         protected void onPreExecute() {
