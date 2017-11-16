@@ -2,8 +2,10 @@ package com.fiepi.moebooru.util;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
+import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.api.GetPost;
 import com.fiepi.moebooru.api.RawPostBean;
 import com.fiepi.moebooru.bean.PostBean;
@@ -30,7 +32,7 @@ import java.util.List;
  */
 
 public class FileUtils {
-    private String mFileName = "posts.json";
+    private static final String mFileName = "posts.json";
 
     public FileUtils(){
     }
@@ -46,6 +48,7 @@ public class FileUtils {
     public void saveJson(String json){
         try (OutputStream outputStream = new FileOutputStream(getFile())) {
             outputStream.write(json.getBytes());
+            outputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -92,7 +95,9 @@ public class FileUtils {
         return null;
     }
     public File getFile(){
-        File file = new File(getContext().getFilesDir(), mFileName);
+        File file = new File(getContext().getCacheDir(), mFileName);
+//        File path = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File file2 = new File(path, mFileName);
         return file;
     }
 

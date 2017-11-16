@@ -4,8 +4,8 @@
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <!--<color name="colorAccent">#FF4081</color>-->
 
-    <color name="colorPrimary">#ff65212c</color>
-    <color name="colorPrimaryDark">#ff41182a</color>
+    <color name="colorPrimary">#ff75212c</color>
+    <color name="colorPrimaryDark">#ff65212c</color>
     <color name="colorBackground">#ff222222</color>
 
     <color name="colorAccent">#ffff4444</color>
@@ -20,4 +20,5 @@
 
     <color name="colorBlueGrey">#ff6e8198</color>
     <color name="colorGrey300">#ffe0e0e0</color>
+    <color name="colorStatusBar">#ff65212c</color>
 </resources>

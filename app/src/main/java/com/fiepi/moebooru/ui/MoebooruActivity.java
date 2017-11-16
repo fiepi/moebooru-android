@@ -4,10 +4,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,19 +18,20 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.fiepi.moebooru.R;
-import com.fiepi.moebooru.bean.PostBean;
 
 public class MoebooruActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, PostFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, PostFragment.OnPostFragmentInteractionListener {
 
+    private Fragment mPostFragment = new PostFragment();
+    private FragmentManager mFragmentManager = getFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moebooru);
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION );
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION );
 //        getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+        getWindow().setNavigationBarColor(Color.TRANSPARENT);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,12 +44,9 @@ public class MoebooruActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         if (savedInstanceState == null){
-            Fragment fragment = new PostFragment();
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frag_content, fragment)
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.frag_content, mPostFragment)
                     .commit();
         }
     }
@@ -114,8 +114,9 @@ public class MoebooruActivity extends AppCompatActivity
         return true;
     }
 
+
     @Override
-    public void onListFragmentInteraction(PostBean postBean) {
+    public void onPostFragmentInteraction(int i) {
 
     }
 }

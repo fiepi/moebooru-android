@@ -7,8 +7,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="posts_padding">4dp</dimen>
-    <dimen name="statusbar_padding">24dp</dimen>
+    <dimen name="posts_padding">3dp</dimen>
+    <dimen name="statusbar_padding">25dp</dimen>
     <dimen name="text_left_padding">8dp</dimen>
     <dimen name="text_padding">3dp</dimen>
 </resources>

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -25,20 +25,17 @@ import java.util.List;
 public class PostFragment extends Fragment {
 
     private static final String TAG = "PostFragment";
-
-    private int mRefreshStatus = 0;
+    private static final int SPAN_COUNT = 3;
+    private static final String ARG_COLUMN_COUNT = "column-count";
+    private int mColumnCount = 1;
+    private OnPostFragmentInteractionListener mListener;
 
     private RecyclerView mRecyclerView;
-    private PostViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private static final int LAYOUT_MANAGER = 2;
-    private static final int SPAN_COUNT = 3;
-
-    private static final String ARG_COLUMN_COUNT = "column-count";
-
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private PostViewAdapter mAdapter;
+    private PullPost mPullPostTask = null;
 
     private List<PostBean> mPostBeansItems = new ArrayList<>();
 
@@ -60,41 +57,54 @@ public class PostFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-        new PullPost(0).execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post_view, container, false);
-
-        // Set the adapter
-//        if (view instanceof RecyclerView) {
-//            Context context = view.getContext();
-//            mRecyclerView = (RecyclerView) view;
-//            if (LAYOUT_MANAGER == 2) {
-//                mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(SPAN_COUNT,
-//                        StaggeredGridLayoutManager.VERTICAL));
-//            } else {
-//                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
-//        }
-        mRecyclerView = (RecyclerView) view;
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL));
+        View rootView = inflater.inflate(R.layout.fragment_post_view, container, false);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_post);
+        mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new PostViewAdapter(mPostBeansItems);
         mRecyclerView.setAdapter(mAdapter);
-        return view;
+
+        mSwipeRefreshLayout = rootView.findViewById(R.id.scroll_view);
+        mSwipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        return rootView;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        initRefreshListener();
+        pullCachePosts();
+    }
+
+    private void initRefreshListener(){
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mPullPostTask == null || mPullPostTask.isCancelled() || mPullPostTask.getStatus() == AsyncTask.Status.FINISHED){
+                    mPullPostTask = new PullPost(0);
+                    mPullPostTask.execute();
+                }
+            }
+        });
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnPostFragmentInteractionListener) {
+            mListener = (OnPostFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnPostFragmentInteractionListener");
         }
     }
 
@@ -104,20 +114,23 @@ public class PostFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(PostBean item);
+    public interface OnPostFragmentInteractionListener {
+        void onPostFragmentInteraction(int i);
     }
 
     private class PullPost extends AsyncTask<Integer, Void, List<PostBean>>{
 
-        private Integer status = 0;
+        private Integer status;  // 0:刷新 1：加载更多
+
         public PullPost(Integer integer){
             status = integer;
         }
 
         @Override
         protected List<PostBean> doInBackground(Integer... integers) {
+            if (isCancelled()){
+                return null;
+            }
             return new GetPost().getPosts(20, 1, "null", "https://konachan.com/post.json");
         }
         @Override
@@ -134,52 +147,52 @@ public class PostFragment extends Fragment {
         @Override
         protected void onPostExecute(List<PostBean> postBeans) {
             super.onPostExecute(postBeans);
-            mPostBeansItems = postBeans;
-            Log.i(TAG,mPostBeansItems.get(0).getFile_url());
-            mAdapter = new PostViewAdapter(mPostBeansItems);
-            mRecyclerView.setAdapter(mAdapter);
-
-//            if (status == 0){
-//                if (!postBeans.isEmpty()){
-//                    if (mRefreshStatus == 0) {
-//                        if (postBeans.get(0).getId() > mPostBeansItems.get(0).getId()){
-//                            mPostBeansItems = postBeans;
-////                            initData();
-////                            initView();
-//                        }
-//                        mRefreshStatus = 1;
-//                    }else {
-//                        for (int i = 0; i < postBeans.size(); i++){
-//                            postBeans.add(postBeans.get(i));
-//                            mAdapter.notifyDataSetChanged();
-//                        }
-//                    }
-//                }
-//            }else if (status == 1){
-//                if (!postBeans.isEmpty()){
-//                    for (int i = 0; i < postBeans.size(); i++){
-//                        postBeans.add(postBeans.get(i));
-//                        mAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//            }
+            if (mSwipeRefreshLayout.isRefreshing()){
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+            if (status == 0){
+                if (!postBeans.isEmpty()){
+                    if (!mPostBeansItems.isEmpty()){
+                        //覆盖更新
+                        if (postBeans.get(0).getId() > mPostBeansItems.get(0).getId()){
+                            mPostBeansItems = postBeans;
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }else {
+                        //逐条更新
+                        for (int i = 0; i < postBeans.size(); i++){
+                            mPostBeansItems.add(postBeans.get(i));
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }else if (status == 1){
+                if (!postBeans.isEmpty()){
+                    for (int i = 0; i < postBeans.size(); i++){
+                        mPostBeansItems.add(postBeans.get(i));
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
         }
     }
 
     private void pullCachePosts(){
-        File file = new File(getContext().getFilesDir(),"posts.json");
+        File file = new FileUtils().getFile();
         if (file.exists()){
             try {
                 mPostBeansItems = new FileUtils().getPostBeanFromFile();
                 if (!mPostBeansItems.isEmpty()){
-//                    initData();
-//                    initView();
+                    mAdapter = new PostViewAdapter(mPostBeansItems);
+                    mRecyclerView.setAdapter(mAdapter);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+//            mSwipeRefreshLayout.setRefreshing(false);
         }else {
-            new PullPost(0).execute();
+            mPullPostTask = new PullPost(0);
+            mPullPostTask.execute();
         }
     }
 

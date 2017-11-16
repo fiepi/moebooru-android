@@ -7,6 +7,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
 
         <!--布局时是否考虑给系统窗口留出空间，true为留出空间，bug，布局中的Padding会失效-->
         <!--<item name="android:fitsSystemWindows">false</item>-->
@@ -15,7 +16,7 @@
         <!--透明导航栏-->
         <!--<item name="android:windowTranslucentNavigation">true</item>-->
         <!--使状态栏，导航栏可绘制-->
-        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
