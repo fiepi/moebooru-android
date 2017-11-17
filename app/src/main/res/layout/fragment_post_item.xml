@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:background="@color/colorBackground"
+        android:background="@color/background"
         android:paddingStart="@dimen/text_left_padding"
         android:paddingTop="@dimen/text_padding"
         android:textColor="@color/colorTextID" />
@@ -26,7 +26,7 @@
         android:id="@+id/tv_post_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
+        android:background="@color/background"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/text_left_padding"
         android:paddingBottom="@dimen/text_padding"

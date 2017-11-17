@@ -18,7 +18,8 @@
             android:title="Download" />
     </group>
 
-    <item android:title="More">
+    <item
+        android:title="More">
         <menu>
             <item
                 android:id="@+id/nav_settings"

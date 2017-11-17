@@ -40,8 +40,8 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
         mViewPager = (ViewPager) findViewById(R.id.vp_post);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_detail);
+        setSupportActionBar(mToolbar);
         mToolbar.setTitle("Detail");
-        mToolbar.setBackgroundColor(getColor(R.color.transparent));
         mToolbar.setTitleTextColor(getColor(R.color.white));
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

@@ -24,7 +24,7 @@ public class PostPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        String url = mPostBeanItems.get(position).getFile_url();
+        String url = mPostBeanItems.get(position).getSample_url();
         Fragment fragment = PostDetailFragment.newInstance(url);
         return fragment;
     }

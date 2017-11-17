@@ -35,10 +35,6 @@ public class PostDetailFragment extends Fragment {
 
     private static final String TAG = PostDetailFragment.class.getSimpleName();
 
-    private static final String ARG_POST_ITEM_POS = "ARG_POST_ITEM_POS";
-    private static final String ARG_POST_ITEMS = "ARG_POST_ITEMS";
-    private static final String ARG_POST_ITEM = "ARG_POST_ITEM";
-
     private static final String IMAGE_URL = "image";
     private String mImageUrl;
     private PhotoView mPhotoView;
