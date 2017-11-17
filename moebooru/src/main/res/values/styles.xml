@@ -1,0 +1,53 @@
+<resources>
+
+    <style name="MoeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/background</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@android:color/black</item>
+    </style>
+
+    <style name="DetailTheme" parent="@style/MoeTheme">
+        <item name="android:textColorSecondary">#ffffff</item> <!--toolbar 右侧图标颜色-->
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
+
+        <!--<item name="android:navigationBarColor">@android:color/transparent</item>-->
+        <!--<item name="android:statusBarColor">@color/colorStatusBar</item>-->
+
+        <!--布局时是否考虑给系统窗口留出空间，true为留出空间，bug，布局中的Padding会失效-->
+        <!--<item name="android:fitsSystemWindows">true</item>-->
+        <!--透明状态栏-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--透明导航栏-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <!--使状态栏，导航栏可绘制-->
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="ToolbarPopupTheme" parent="AppTheme.PopupOverlay">
+        <item name="android:colorBackground">@color/dark_bg</item> <!--toolbar右侧菜单背景色-->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
+    </style>
+
+</resources>
