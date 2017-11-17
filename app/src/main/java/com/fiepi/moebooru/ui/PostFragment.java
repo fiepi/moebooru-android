@@ -1,6 +1,7 @@
 package com.fiepi.moebooru.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -136,17 +137,12 @@ public class PostFragment extends Fragment implements PostItemClickListener {
 
     @Override
     public void onPostItemClick(int pos) {
-        PostDetailFragment postDetailFragment = new PostDetailFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_POST_ITEM_POS, pos);
-        args.putParcelable(ARG_POST_ITEM, mPostBeansItems.get(pos));
-        postDetailFragment.setArguments(args);
-        mFragmentManager = getActivity().getSupportFragmentManager();
-        mFragmentManager
-                .beginTransaction()
-                .addToBackStack(TAG)
-                .replace(R.id.frag_post, postDetailFragment)
-                .commit();
+        args.putInt(ARG_POST_ITEM_POS,pos);
+        args.putParcelableArrayList(ARG_POST_ITEMS, (ArrayList<PostBean>) mPostBeansItems);
+        Intent intent = new Intent(getContext(), PostDetailActivity.class);
+        intent.putExtras(args);
+        startActivity(intent);
     }
 
 

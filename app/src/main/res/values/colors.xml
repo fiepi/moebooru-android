@@ -21,4 +21,6 @@
     <color name="colorBlueGrey">#ff6e8198</color>
     <color name="colorGrey300">#ffe0e0e0</color>
     <color name="colorStatusBar">#ff65212c</color>
+
+    <color name="white">@android:color/white</color>
 </resources>

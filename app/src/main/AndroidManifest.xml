@@ -16,7 +16,7 @@
         <activity
             android:name=".ui.MoebooruActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,9 +24,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/DetailTheme"
+            android:name=".ui.PostDetailActivity">
+
+        </activity>
+        <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".ui.PostDetailActivity"></activity>
     </application>
 
 </manifest>
