@@ -1,6 +1,7 @@
 package com.fiepi.moebooru.ui;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,14 @@ import java.util.List;
 
 public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.ViewHolder> {
 
-    private List<PostBean> mPostBeanItems;
-//    private final PostFragment.OnListFragmentInteractionListener mListener;
+    private static final String TAG = PostViewAdapter.class.getSimpleName();
 
-    public PostViewAdapter(List<PostBean> items) {
+    private List<PostBean> mPostBeanItems;
+    private PostItemClickListener mListener;
+
+    public PostViewAdapter(List<PostBean> items, PostItemClickListener listener) {
         mPostBeanItems = items;
-//        mListener = listener;
+        mListener = listener;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mPostBeanItems.get(position);
         int whidth = mPostBeanItems.get(position).getWidth();
         int height = mPostBeanItems.get(position).getHeight();
@@ -49,16 +52,15 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.ViewHo
                 .apply(requestOptions)
                 .into(holder.mImageViewPost);
 
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
-//            }
-//        });
+        holder.mImageViewPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null){
+                    Log.i(TAG, "点击 Item：" + position);
+                    mListener.onPostItemClick(position);
+                }
+            }
+        });
     }
 
     @Override

@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Moebooru</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -25,4 +23,6 @@
         <item>25</item>
         <item>35</item>
     </string-array>
+
+    <string name="action_download">Download</string>
 </resources>

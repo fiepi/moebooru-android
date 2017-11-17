@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="@dimen/statusbar_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.fiepi.moebooru.ui.MoebooruActivity">
@@ -19,10 +18,10 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/ToolbarPopupTheme" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_moebooru" />
+    <include layout="@layout/fragment_content_moebooru" />
 
 </android.support.design.widget.CoordinatorLayout>
