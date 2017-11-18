@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +36,7 @@ public class PostDetailFragment extends Fragment {
 
     private static final String TAG = PostDetailFragment.class.getSimpleName();
 
-    private static final String IMAGE_URL = "image";
+    private static final String IMAGE_URL = "image_url";
     private String mImageUrl;
     private PhotoView mPhotoView;
 
@@ -64,6 +65,7 @@ public class PostDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_post_detail, container, false);
         mPhotoView = (PhotoView) rootView.findViewById(R.id.pv_post);
         mPhotoView.enable();
+        
         RequestOptions requestOptions = new RequestOptions()
                 .centerInside()
                 .diskCacheStrategy(DiskCacheStrategy.ALL);

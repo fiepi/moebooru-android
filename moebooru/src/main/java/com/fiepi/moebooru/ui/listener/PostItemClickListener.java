@@ -1,4 +1,4 @@
-package com.fiepi.moebooru.ui;
+package com.fiepi.moebooru.ui.listener;
 
 import com.fiepi.moebooru.bean.PostBean;
 

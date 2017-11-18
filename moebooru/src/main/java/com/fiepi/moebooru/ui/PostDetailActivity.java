@@ -1,11 +1,6 @@
 package com.fiepi.moebooru.ui;
 
-import android.app.DownloadManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,12 +9,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.bumptech.glide.Glide;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.bean.PostBean;
+import com.fiepi.moebooru.ui.adapter.PostPagerAdapter;
 import com.fiepi.moebooru.util.ImgDownloadUtils;
+import com.fiepi.moebooru.util.ShareUtils;
 
-import java.io.File;
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -42,7 +38,6 @@ public class PostDetailActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.vp_post);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_detail);
         setSupportActionBar(mToolbar);
-        mToolbar.setTitle("Detail");
         mToolbar.setTitleTextColor(getColor(R.color.white));
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -66,15 +61,17 @@ public class PostDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_download_post) {
-
             String site = "Konachan.com";
             PostBean postBean = mPostBeanItems.get(mViewPager.getCurrentItem());
             new ImgDownloadUtils(postBean.getFile_url(), postBean.getTags(),
                     mPostBeanItems.get(mViewPager.getCurrentItem()).getId(),
                     site, this)
                     .toDownload();
-
             return true;
+        }else if (id == R.id.action_share_post){
+            String site = "https://konachan.com";
+            String url = site + "/post/show/" + mPostBeanItems.get(mViewPager.getCurrentItem()).getId();
+            new ShareUtils().shareText(url, this);
         }
 
         return super.onOptionsItemSelected(item);

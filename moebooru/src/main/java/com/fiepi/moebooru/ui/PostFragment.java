@@ -1,13 +1,10 @@
 package com.fiepi.moebooru.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -19,6 +16,9 @@ import android.view.ViewGroup;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.api.GetPost;
 import com.fiepi.moebooru.bean.PostBean;
+import com.fiepi.moebooru.ui.adapter.PostViewAdapter;
+import com.fiepi.moebooru.ui.listener.OnRcvScrollListener;
+import com.fiepi.moebooru.ui.listener.PostItemClickListener;
 import com.fiepi.moebooru.util.FileUtils;
 
 import java.io.File;

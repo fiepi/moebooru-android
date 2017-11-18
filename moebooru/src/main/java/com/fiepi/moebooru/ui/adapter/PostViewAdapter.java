@@ -1,4 +1,4 @@
-package com.fiepi.moebooru.ui;
+package com.fiepi.moebooru.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.bean.PostBean;
+import com.fiepi.moebooru.ui.listener.PostItemClickListener;
 import com.fiepi.moebooru.ui.widget.FixedImageView;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 if (mListener != null){
-                    Log.i(TAG, "点击 Item：" + position);
+//                    Log.i(TAG, "点击 Item：" + position);
                     mListener.onPostItemClick(position);
                 }
             }

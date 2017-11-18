@@ -38,8 +38,8 @@ android {
             minSdkVersion 23
             applicationId 'com.fiepi.moebooru'
             targetSdkVersion 26
-            versionCode 2
-            versionName '0.0.2'
+            versionCode 4
+            versionName '0.0.4'
             signingConfig signingConfigs.config_release
         }
         beta {
@@ -48,8 +48,8 @@ android {
             minSdkVersion 23
             applicationId 'com.fiepi.moebooru.debug'
             targetSdkVersion 26
-            versionCode 2
-            versionName '0.0.2'
+            versionCode 4
+            versionName '0.0.4'
             signingConfig signingConfigs.config_release
         }
     }
