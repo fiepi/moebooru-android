@@ -1,36 +1,25 @@
 package com.fiepi.moebooru.ui;
 
-import android.app.DownloadManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.fiepi.moebooru.R;
-import com.fiepi.moebooru.bean.PostBean;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 public class PostDetailFragment extends Fragment {
 
@@ -39,6 +28,8 @@ public class PostDetailFragment extends Fragment {
     private static final String IMAGE_URL = "image_url";
     private String mImageUrl;
     private PhotoView mPhotoView;
+
+    ProgressWheel mProgressLoading;
 
     public PostDetailFragment() {
 
@@ -65,13 +56,31 @@ public class PostDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_post_detail, container, false);
         mPhotoView = (PhotoView) rootView.findViewById(R.id.pv_post);
         mPhotoView.enable();
-        
+        mProgressLoading = (ProgressWheel) rootView.findViewById(R.id.progress_loading);
+        mProgressLoading.setBarColor(Color.WHITE);
+        mProgressLoading.setSpinSpeed((float) 0.5);
+
         RequestOptions requestOptions = new RequestOptions()
                 .centerInside()
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
+
         Glide.with(getContext())
                 .load(mImageUrl)
                 .apply(requestOptions)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                Target<Drawable> target, boolean isFirstResource) {
+                        mProgressLoading.setProgress(0.0f);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        mProgressLoading.setProgress(0.0f);
+                        return false;
+                    }
+                })
                 .into(mPhotoView);
         return rootView;
     }
