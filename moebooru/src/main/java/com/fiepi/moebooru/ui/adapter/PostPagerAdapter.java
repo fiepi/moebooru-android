@@ -16,6 +16,7 @@ import java.util.List;
 
 public class PostPagerAdapter extends FragmentStatePagerAdapter{
     private static final String TAG = PostPagerAdapter.class.getSimpleName();
+    private static final String POST = "POST";
     private List<PostBean> mPostBeanItems;
 
     public PostPagerAdapter(FragmentManager fm, List<PostBean> data) {
@@ -25,8 +26,8 @@ public class PostPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        String url = mPostBeanItems.get(position).getSample_url();
-        Fragment fragment = PostDetailFragment.newInstance(url);
+        PostBean postBean = mPostBeanItems.get(position);
+        Fragment fragment = PostDetailFragment.newInstance(postBean);
         return fragment;
     }
 

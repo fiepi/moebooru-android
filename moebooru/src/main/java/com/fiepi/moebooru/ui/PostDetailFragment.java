@@ -6,7 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +23,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.fiepi.moebooru.R;
+import com.fiepi.moebooru.bean.PostBean;
+import com.fiepi.moebooru.util.ImgDownloadUtils;
+import com.fiepi.moebooru.util.ShareUtils;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 public class PostDetailFragment extends Fragment {
@@ -26,19 +33,21 @@ public class PostDetailFragment extends Fragment {
     private static final String TAG = PostDetailFragment.class.getSimpleName();
 
     private static final String IMAGE_URL = "image_url";
+    private static final String POST = "POST";
     private String mImageUrl;
     private PhotoView mPhotoView;
-
-    ProgressWheel mProgressLoading;
+    private Toolbar mToolbar;
+    private ProgressWheel mProgressLoading;
+    private PostBean mPostBean;
 
     public PostDetailFragment() {
 
     }
 
-    public static PostDetailFragment newInstance(String url) {
+    public static PostDetailFragment newInstance(PostBean postBean) {
         PostDetailFragment fragment = new PostDetailFragment();
         Bundle args = new Bundle();
-        args.putString(IMAGE_URL, url);
+        args.putParcelable(POST, postBean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,8 +55,10 @@ public class PostDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //开启菜单
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
-            mImageUrl = getArguments().getString(IMAGE_URL);
+            mPostBean = getArguments().getParcelable(POST);
         }
     }
 
@@ -58,14 +69,18 @@ public class PostDetailFragment extends Fragment {
         mPhotoView.enable();
         mProgressLoading = (ProgressWheel) rootView.findViewById(R.id.progress_loading);
         mProgressLoading.setBarColor(Color.WHITE);
-        mProgressLoading.setSpinSpeed((float) 0.5);
+        mProgressLoading.setSpinSpeed(0.5f);
+
+        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar_detail);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        mToolbar.setTitle("Post " + mPostBean.getId());
 
         RequestOptions requestOptions = new RequestOptions()
                 .centerInside()
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(getContext())
-                .load(mImageUrl)
+                .load(mPostBean.getSample_url())
                 .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -106,6 +121,30 @@ public class PostDetailFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_download_post) {
+            String site = "Konachan.com";
+            new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), site, getActivity()).toDownload();
+            return true;
+        }else if (id == R.id.action_share_post){
+            String site = "https://konachan.com";
+            String url = site + "/post/show/" + mPostBean.getId();
+            new ShareUtils().shareText(url, getActivity());
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -1,24 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:wheel="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:id="@+id/sliding_bottom"
+    android:gravity="bottom"
+    android:background="@color/black"
     android:layout_height="match_parent"
-    android:id="@+id/frag_post_detail">
+    android:layout_width="match_parent"
+    sothree:umanoPanelHeight="15dp"
+    sothree:umanoShadowHeight="0dp">
 
-    <com.bm.library.PhotoView
-        android:id="@+id/pv_post"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:wheel="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/ic_launcher">
-    </com.bm.library.PhotoView>
+        android:id="@+id/frag_post_detail">
 
-    <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/progress_loading"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        wheel:matProg_progressIndeterminate="true" />
+        <com.bm.library.PhotoView
+            android:id="@+id/pv_post"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</FrameLayout>
+        </com.bm.library.PhotoView>
+
+        <com.pnikosis.materialishprogress.ProgressWheel
+            android:id="@+id/progress_loading"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            wheel:matProg_progressIndeterminate="true" />
+
+        <android.support.v7.widget.Toolbar
+            xmlns:app="http://schemas.android.com/tools"
+            android:id="@+id/toolbar_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            app:title="@string/title_toolbar_detail"
+            app:popupTheme="@style/ToolbarPopupTheme">
+
+        </android.support.v7.widget.Toolbar>
+
+    </FrameLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:background="@color/black"
+            android:gravity="center|top"
+            android:src="@drawable/ic_action_panel_line"
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <include layout="@layout/detail_info"/>
+        <include layout="@layout/detail_url"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
 

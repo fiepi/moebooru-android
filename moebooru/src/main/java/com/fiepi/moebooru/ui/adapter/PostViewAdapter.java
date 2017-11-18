@@ -18,7 +18,7 @@ import com.fiepi.moebooru.ui.widget.FixedImageView;
 import java.util.List;
 
 
-public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.ViewHolder> {
+public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.PostViewHolder> {
 
     private static final String TAG = PostViewAdapter.class.getSimpleName();
 
@@ -31,14 +31,14 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_post_item, parent, false);
-        return new ViewHolder(view);
+        return new PostViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final PostViewHolder holder, final int position) {
         holder.mItem = mPostBeanItems.get(position);
         int whidth = mPostBeanItems.get(position).getWidth();
         int height = mPostBeanItems.get(position).getHeight();
@@ -69,14 +69,14 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.ViewHo
         return mPostBeanItems == null ? 0 : mPostBeanItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class PostViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final FixedImageView mImageViewPost;
         public final TextView mTextViewID;
         public final TextView mTextViewSize;
         public PostBean mItem;
 
-        public ViewHolder(View view) {
+        public PostViewHolder(View view) {
             super(view);
             mView = view;
             mImageViewPost = (FixedImageView) view.findViewById(R.id.iv_post);

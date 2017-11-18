@@ -27,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_moebooru"
             app:menu="@menu/activity_moebooru_drawer"
             app:itemTextColor="@android:color/black"
@@ -41,43 +40,49 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:fitsSystemWindows="true"
             app:itemTextColor="@android:color/black"
             app:itemTextAppearance="@color/colorPrimary"
             app:itemIconTint="@color/colorPrimary">
 
-
-            <!--右侧抽屉toolbar布局-->
-            <android.support.design.widget.AppBarLayout
-                android:background="@color/white"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="4dp">
+                android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/statusbar_padding"
+                <!--右侧抽屉toolbar布局-->
+                <android.support.design.widget.AppBarLayout
+                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp">
 
-                    <android.support.v7.widget.Toolbar
-                        android:background="@color/white"
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/statusbar_padding"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:contentInsetStart="0dp"
-                        app:contentInsetEnd="0dp">
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:text="  Text"
+                        <android.support.v7.widget.Toolbar
+                            android:background="@color/white"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            app:contentInsetStart="0dp"
+                            app:contentInsetEnd="0dp">
 
-                    </android.support.v7.widget.Toolbar>
+                            <TextView
+                                android:text="  Text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                        </android.support.v7.widget.Toolbar>
 
-            </android.support.design.widget.AppBarLayout>
+                    </LinearLayout>
 
+                </android.support.design.widget.AppBarLayout>
+
+                <include layout="@layout/nav_right_tags_view"></include>
+
+            </LinearLayout>
 
         </android.support.design.widget.NavigationView>
 

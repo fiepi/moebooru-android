@@ -1,5 +1,6 @@
 package com.fiepi.moebooru.ui;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -10,11 +11,22 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.fiepi.moebooru.R;
+import com.fiepi.moebooru.ui.adapter.TagViewAdapter;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class MoebooruActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,6 +35,11 @@ public class MoebooruActivity extends AppCompatActivity
 
     private Fragment mPostFragment = new PostFragment();
     private FragmentManager mFragmentManager = getSupportFragmentManager();
+
+    private TagViewAdapter mTagAdapter;
+    private RecyclerView mTagRecyclerView;
+    private RecyclerView.LayoutManager mTagLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +61,23 @@ public class MoebooruActivity extends AppCompatActivity
                     .replace(R.id.frag_post, mPostFragment)
                     .commit();
         }
+
+        NavigationView rightNavigationView = (NavigationView) findViewById(R.id.nav_right);
+//        rightNavigationView.setNavigationItemSelectedListener(this);
+        mTagRecyclerView = (RecyclerView) this.findViewById(R.id.rv_tags);
+        mTagLayoutManager = new LinearLayoutManager(this);
+        mTagRecyclerView.setLayoutManager(mTagLayoutManager);
+        mTagAdapter = new TagViewAdapter(initData());
+        mTagRecyclerView.setAdapter(mTagAdapter);
+    }
+
+    private List<String> initData(){
+        List<String> data = new ArrayList<>();
+        for (int i = 0; i < 10; i++){
+            data.add("tag: " + i);
+            Log.i(TAG, data.get(i));
+        }
+        return data;
     }
 
     @Override

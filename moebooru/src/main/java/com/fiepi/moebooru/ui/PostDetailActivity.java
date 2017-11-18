@@ -27,18 +27,13 @@ public class PostDetailActivity extends AppCompatActivity {
     private List<PostBean> mPostBeanItems;
     private int mPOS;
     private PostPagerAdapter mAdapter;
-
     private ViewPager mViewPager;
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
         mViewPager = (ViewPager) findViewById(R.id.vp_post);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_detail);
-        setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(getColor(R.color.white));
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         mPOS = bundle.getInt(ARG_POST_ITEM_POS);
@@ -47,6 +42,8 @@ public class PostDetailActivity extends AppCompatActivity {
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mPOS);
     }
+
+    /**
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,4 +73,5 @@ public class PostDetailActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    **/
 }
