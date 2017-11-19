@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
-    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sliding_bottom"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_panel"
     android:gravity="bottom"
     android:background="@color/black"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    sothree:umanoPanelHeight="15dp"
+    sothree:umanoPanelHeight="@dimen/sliding_panel_height"
     sothree:umanoShadowHeight="0dp">
 
     <FrameLayout
@@ -31,42 +31,35 @@
             android:layout_gravity="center"
             wheel:matProg_progressIndeterminate="true" />
 
-        <android.support.v7.widget.Toolbar
-            xmlns:app="http://schemas.android.com/tools"
-            android:id="@+id/toolbar_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            app:title="@string/title_toolbar_detail"
-            app:popupTheme="@style/ToolbarPopupTheme">
-
-        </android.support.v7.widget.Toolbar>
-
     </FrameLayout>
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:background="@color/background"
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:background="@color/black"
-            android:gravity="center|top"
-            android:src="@drawable/ic_action_panel_line"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/background"
             android:layout_width="match_parent"
-            android:layout_height="15dp" />
+            android:layout_height="@dimen/sliding_panel_height">
+
+            <TextView
+                android:id="@+id/tv_id_panel"
+                android:textColor="@color/white"
+                android:paddingStart="@dimen/text_left_padding"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <include layout="@layout/detail_info"/>
         <include layout="@layout/detail_url"/>
+        <include layout="@layout/detail_tags_view"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
-

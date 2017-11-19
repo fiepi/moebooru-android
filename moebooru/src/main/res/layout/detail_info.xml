@@ -14,10 +14,16 @@
         android:layout_height="wrap_content">
         <TextView
             android:text="Id"
+            android:textColor="@color/white"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
             android:id="@+id/tv_info_id"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -28,11 +34,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Size"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
             android:id="@+id/tv_info_size"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -43,11 +55,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Author"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
             android:id="@+id/tv_info_suthor"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -59,11 +77,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Creator"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
             android:id="@+id/tv_info_creator"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -74,11 +98,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Created at"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
             android:id="@+id/tv_info_created_at"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -89,13 +119,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Source"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
             android:id="@+id/tv_info_source"
             android:layout_gravity="end"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -104,11 +140,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Rating"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
             android:id="@+id/tv_info_rating"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -119,15 +161,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Score"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
             android:id="@+id/tv_info_score"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
 </LinearLayout>

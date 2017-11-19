@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/white"
             android:text="Sample url"
             android:gravity="start"
             android:layout_width="wrap_content"
@@ -50,6 +51,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:textColor="@color/white"
             android:text="Larger url"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
@@ -86,6 +88,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:textColor="@color/white"
             android:text="Origin url"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
