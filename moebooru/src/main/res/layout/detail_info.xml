@@ -13,48 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="Id"
-            android:textColor="@color/white"
-            android:layout_gravity="start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textColor="@color/white"
-            android:id="@+id/tv_info_id"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textColor="@color/white"
-            android:text="Size"
-            android:layout_gravity="start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textColor="@color/white"
-            android:id="@+id/tv_info_size"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
             android:textColor="@color/white"
             android:text="Author"
             android:layout_gravity="start"
@@ -66,7 +24,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:textColor="@color/white"
-            android:id="@+id/tv_info_suthor"
+            android:id="@+id/tv_info_author"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -131,7 +89,10 @@
         <TextView
             android:id="@+id/tv_info_source"
             android:layout_gravity="end"
-            android:textColor="@color/white"
+            android:maxLines="2"
+            android:paddingStart="50dp"
+            android:autoLink="web"
+            android:textColor="@android:color/holo_blue_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:theme="@style/AppThemeAppBarOverlay"
         android:fitsSystemWindows="false">
 
         <android.support.v7.widget.Toolbar
@@ -24,6 +24,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/fragment_content_moebooru" />
+    <include layout="@layout/fragment_moebooru" />
 
 </android.support.design.widget.CoordinatorLayout>

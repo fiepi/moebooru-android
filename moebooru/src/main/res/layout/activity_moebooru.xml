@@ -51,41 +51,34 @@
 
                 <!--右侧抽屉toolbar布局-->
                 <android.support.design.widget.AppBarLayout
+                    android:paddingTop="@dimen/statusbar_padding"
                     android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="4dp">
-
                     <LinearLayout
                         android:orientation="horizontal"
-                        android:paddingTop="@dimen/statusbar_padding"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
                         <android.support.v7.widget.Toolbar
                             android:background="@color/white"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="?attr/actionBarSize"
                             app:contentInsetStart="0dp"
                             app:contentInsetEnd="0dp">
-
-                            <TextView
-                                android:text="  Text"
-                                android:layout_width="match_parent"
+                            <ImageView
+                                android:layout_gravity="end"
+                                android:paddingEnd="@dimen/text_left_padding"
+                                android:src="@drawable/ic_action_search"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
-
                         </android.support.v7.widget.Toolbar>
-
                     </LinearLayout>
-
                 </android.support.design.widget.AppBarLayout>
 
                 <include layout="@layout/nav_right_tags_view"></include>
 
             </LinearLayout>
-
         </android.support.design.widget.NavigationView>
-
     </android.support.v4.widget.DrawerLayout>
-
 </android.support.design.widget.CoordinatorLayout>

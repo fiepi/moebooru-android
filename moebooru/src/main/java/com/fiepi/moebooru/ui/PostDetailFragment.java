@@ -2,19 +2,22 @@ package com.fiepi.moebooru.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bm.library.PhotoView;
@@ -30,8 +33,9 @@ import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.adapter.TagDetailViewAdapter;
 import com.fiepi.moebooru.util.ImgDownloadUtils;
 import com.fiepi.moebooru.util.ShareUtils;
-import com.pnikosis.materialishprogress.ProgressWheel;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import java.text.SimpleDateFormat;
 
 public class PostDetailFragment extends Fragment {
 
@@ -40,12 +44,23 @@ public class PostDetailFragment extends Fragment {
     private static final String POST = "POST";
     private PhotoView mPhotoView;
 //    private Toolbar mToolbar;
-    private ProgressWheel mProgressLoading;
+    private ProgressBar mProgressBar;
     private PostBean mPostBean;
     private SlidingUpPanelLayout mSlidingUpPanelLayout;
     private RecyclerView.LayoutManager mTagDetailLayoutManager;
     private RecyclerView mRecyclerView;
     private TagDetailViewAdapter mTagAdapter;
+
+    private TextView mTextViewInfoID;
+    private TextView mTextViewInfoSize;
+    private TextView mTextViewInfoAuthor;
+    private TextView mTextViewInfoCreator;
+    private TextView mTextViewInfoCreatedAt;
+    private TextView mTextViewInfoSource;
+    private TextView mTextViewInfoRating;
+    private TextView mTextViewInfoScore;
+
+    private ImageView mImageViewDL;
 
     public PostDetailFragment() {
 
@@ -74,23 +89,27 @@ public class PostDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_post_detail, container, false);
         mPhotoView = (PhotoView) rootView.findViewById(R.id.pv_post);
         mPhotoView.enable();
-        mProgressLoading = (ProgressWheel) rootView.findViewById(R.id.progress_loading);
-        mProgressLoading.setBarColor(Color.WHITE);
-        mProgressLoading.setSpinSpeed(0.5f);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.pb_detail);
+        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
         mSlidingUpPanelLayout = (SlidingUpPanelLayout) rootView.findViewById(R.id.sliding_panel);
 
-//        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar_detail);
-//        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
-//        mToolbar.setTitle("Post " + mPostBean.getId());
-
         TextView textViewID = (TextView) rootView.findViewById(R.id.tv_id_panel);
         textViewID.setText("#" + mPostBean.getId());
+
+        initInfoView(rootView);
+
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_tags_detail);
         mTagDetailLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mTagDetailLayoutManager);
         mTagAdapter = new TagDetailViewAdapter(mPostBean.getTags());
         mRecyclerView.setAdapter(mTagAdapter);
+
+        LinearLayout originUrlLayout = (LinearLayout) rootView.findViewById(R.id.origin_url_layout);
+        LinearLayout largerUrlLayout = (LinearLayout) rootView.findViewById(R.id.larger_url_layout);
+
+        originUrlLayout.setVisibility(LinearLayout.GONE);
+        largerUrlLayout.setVisibility(LinearLayout.GONE);
 
         RequestOptions requestOptions = new RequestOptions()
                 .centerInside()
@@ -103,13 +122,13 @@ public class PostDetailFragment extends Fragment {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,
                                                 Target<Drawable> target, boolean isFirstResource) {
-                        mProgressLoading.setProgress(0.0f);
+                        mProgressBar.setVisibility(View.GONE);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        mProgressLoading.setProgress(0.0f);
+                        mProgressBar.setVisibility(View.GONE);
                         return false;
                     }
                 })
@@ -117,11 +136,44 @@ public class PostDetailFragment extends Fragment {
         return rootView;
     }
 
+
+    private void initInfoView(View view){
+
+        mImageViewDL = (ImageView) view.findViewById(R.id.iv_panel_download);
+
+//        mTextViewInfoID = (TextView) view.findViewById(R.id.tv_info_id);
+//        mTextViewInfoSize = (TextView) view.findViewById(R.id.tv_info_size);
+        mTextViewInfoAuthor = (TextView) view.findViewById(R.id.tv_info_author);
+        mTextViewInfoCreator = (TextView) view.findViewById(R.id.tv_info_creator);
+        mTextViewInfoCreatedAt = (TextView) view.findViewById(R.id.tv_info_created_at);
+        mTextViewInfoSource = (TextView) view.findViewById(R.id.tv_info_source);
+        mTextViewInfoRating = (TextView) view.findViewById(R.id.tv_info_rating);
+        mTextViewInfoScore = (TextView) view.findViewById(R.id.tv_info_score);
+
+//        mTextViewInfoID.setText(String.valueOf(mPostBean.getId()));
+//        mTextViewInfoSize.setText(String.valueOf(mPostBean.getWidth()) + " x " + String.valueOf(mPostBean.getHeight()));
+        mTextViewInfoAuthor.setText(mPostBean.getAuthor() == null ? " " : mPostBean.getAuthor() );
+        mTextViewInfoCreator.setText(mPostBean.getCreator_id() + "");
+        mTextViewInfoCreatedAt.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(mPostBean.getCreated_at()));
+        mTextViewInfoSource.setText(mPostBean.getSource() == null ? "" : mPostBean.getSource());
+        mTextViewInfoRating.setText(mPostBean.getRating());
+        mTextViewInfoScore.setText(mPostBean.getScore() + "");
+    }
+
+    private void actionListener(){
+        mImageViewDL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String site = "Konachan.com";
+                new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), site, getActivity()).toDownload();
+            }
+        });
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        Log.i(TAG, "getView().getSystemUiVisibility():" + getView().getSystemUiVisibility());
-//        onClickPhotoViewListener();
+        actionListener();
     }
 
 
@@ -206,5 +258,4 @@ public class PostDetailFragment extends Fragment {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
-
 }

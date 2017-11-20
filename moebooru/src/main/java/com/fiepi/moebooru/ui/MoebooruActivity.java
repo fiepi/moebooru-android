@@ -58,7 +58,7 @@ public class MoebooruActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null){
             mFragmentManager.beginTransaction()
-                    .replace(R.id.frag_post, mPostFragment)
+                    .replace(R.id.frag_moebooru, mPostFragment)
                     .commit();
         }
 
@@ -67,14 +67,14 @@ public class MoebooruActivity extends AppCompatActivity
         mTagRecyclerView = (RecyclerView) this.findViewById(R.id.rv_tags);
         mTagLayoutManager = new LinearLayoutManager(this);
         mTagRecyclerView.setLayoutManager(mTagLayoutManager);
-        mTagAdapter = new TagViewAdapter(initData());
+        mTagAdapter = new TagViewAdapter(initData(), this);
         mTagRecyclerView.setAdapter(mTagAdapter);
     }
 
     private List<String> initData(){
         List<String> data = new ArrayList<>();
         for (int i = 0; i < 10; i++){
-            data.add("tag: " + i);
+            data.add("TAG: " + i);
             Log.i(TAG, data.get(i));
         }
         return data;
@@ -117,10 +117,15 @@ public class MoebooruActivity extends AppCompatActivity
             Fragment fragment = new PostFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.frag_post, fragment)
+                    .replace(R.id.frag_moebooru, fragment)
                     .commit();
 
-        } else if (id == R.id.nav_account) {
+        } else if (id == R.id.nav_booru) {
+            Fragment fragment = new BooruFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frag_moebooru, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_download) {
 

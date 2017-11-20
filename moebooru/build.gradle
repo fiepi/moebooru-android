@@ -81,6 +81,5 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:${glideVersion}"
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.bm.photoview:library:1.4.1'
-    implementation 'com.pnikosis:materialish-progress:1.7'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 }

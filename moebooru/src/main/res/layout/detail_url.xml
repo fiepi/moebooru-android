@@ -10,12 +10,13 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/sample_url_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="24dp">
         <TextView
             android:textColor="@color/white"
-            android:text="Sample url"
+            android:text="Sample:"
             android:gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -46,13 +47,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/larger_url_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="24dp">
 
         <TextView
             android:textColor="@color/white"
-            android:text="Larger url"
+            android:text="Larger:"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -83,13 +85,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/origin_url_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="24dp">
 
         <TextView
             android:textColor="@color/white"
-            android:text="Origin url"
+            android:text="Origin:"
             android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

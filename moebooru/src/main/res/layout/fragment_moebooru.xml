@@ -7,6 +7,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.fiepi.moebooru.ui.MoebooruActivity"
     tools:showIn="@layout/app_bar_moebooru"
-    android:id="@+id/frag_post">
+    android:id="@+id/frag_moebooru">
 
 </FrameLayout>
