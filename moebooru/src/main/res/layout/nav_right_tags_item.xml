@@ -4,6 +4,8 @@
     android:padding="@dimen/text_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="?android:selectableItemBackground"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <View
@@ -16,7 +18,7 @@
         android:paddingStart="@dimen/text_left_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CheckBox" />
+        android:text="CheckBox"/>
 
     <View
         android:layout_weight="1"
@@ -24,6 +26,8 @@
         android:layout_height="0dp"/>
 
     <ImageView
+        android:clickable="true"
+        android:background="?android:selectableItemBackgroundBorderless"
         android:padding="@dimen/text_padding"
         android:id="@+id/iv_tag_more"
         android:src="@drawable/ic_action_more"
@@ -32,3 +36,4 @@
         android:layout_height="wrap_content" />
 
 </LinearLayout>
+

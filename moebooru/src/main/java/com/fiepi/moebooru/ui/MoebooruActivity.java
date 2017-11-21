@@ -18,6 +18,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.ui.adapter.TagViewAdapter;
@@ -39,6 +43,7 @@ public class MoebooruActivity extends AppCompatActivity
     private TagViewAdapter mTagAdapter;
     private RecyclerView mTagRecyclerView;
     private RecyclerView.LayoutManager mTagLayoutManager;
+    private NavBooruFragment mNavBooruFragment = new NavBooruFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +59,9 @@ public class MoebooruActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        NavigationView leftNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        leftNavigationView.setNavigationItemSelectedListener(this);
+
         if (savedInstanceState == null){
             mFragmentManager.beginTransaction()
                     .replace(R.id.frag_moebooru, mPostFragment)
@@ -69,6 +75,26 @@ public class MoebooruActivity extends AppCompatActivity
         mTagRecyclerView.setLayoutManager(mTagLayoutManager);
         mTagAdapter = new TagViewAdapter(initData(), this);
         mTagRecyclerView.setAdapter(mTagAdapter);
+
+        View headerView = leftNavigationView.getHeaderView(0);
+        LinearLayout headerInfoLayout = (LinearLayout) headerView.findViewById(R.id.layout_head_info);
+        headerInfoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "点击头部信息");
+                if (mNavBooruFragment.isVisible()){
+                    Log.i(TAG, "可见");
+                    FrameLayout frameLayout = (FrameLayout) leftNavigationView.findViewById(R.id.frag_nav_booru_view);
+                    frameLayout.setVisibility(FrameLayout.GONE);
+                }else {
+                    mNavBooruFragment = new NavBooruFragment();
+                    mFragmentManager.beginTransaction()
+                            .replace(R.id.frag_nav_booru, mNavBooruFragment)
+                            .commit();
+                }
+            }
+        });
+
     }
 
     private List<String> initData(){

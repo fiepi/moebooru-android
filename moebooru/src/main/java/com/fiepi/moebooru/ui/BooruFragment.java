@@ -6,6 +6,9 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +16,12 @@ import android.widget.ProgressBar;
 
 import com.fiepi.moebooru.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class BooruFragment extends Fragment {
+    private static final String TAG = BooruFragment.class.getSimpleName();
 
     public BooruFragment() {
         // Required empty public constructor
@@ -56,5 +63,15 @@ public class BooruFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+
+    private List<String> initData(){
+        List<String> data = new ArrayList<>();
+        for (int i = 0; i < 10; i++){
+            data.add("Booru: " + i);
+            Log.i(TAG, data.get(i));
+        }
+        return data;
     }
 }

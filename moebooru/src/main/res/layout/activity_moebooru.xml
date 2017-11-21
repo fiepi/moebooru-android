@@ -31,7 +31,11 @@
             app:menu="@menu/activity_moebooru_drawer"
             app:itemTextColor="@android:color/black"
             app:itemTextAppearance="@color/colorPrimary"
-            app:itemIconTint="@color/colorPrimary"/>
+            app:itemIconTint="@color/colorPrimary">
+
+            <include layout="@layout/nav_left_booru"/>
+
+        </android.support.design.widget.NavigationView>
 
         <!--右侧抽屉-->
         <android.support.design.widget.NavigationView
@@ -63,13 +67,15 @@
                         <android.support.v7.widget.Toolbar
                             android:background="@color/white"
                             android:layout_width="match_parent"
-                            android:layout_height="?attr/actionBarSize"
+                            android:layout_height="?android:attr/actionBarSize"
                             app:contentInsetStart="0dp"
                             app:contentInsetEnd="0dp">
                             <ImageView
                                 android:layout_gravity="end"
                                 android:paddingEnd="@dimen/text_left_padding"
                                 android:src="@drawable/ic_action_search"
+                                android:clickable="true"
+                                android:background="?android:selectableItemBackgroundBorderless"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </android.support.v7.widget.Toolbar>

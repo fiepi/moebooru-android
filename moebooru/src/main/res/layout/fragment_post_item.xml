@@ -4,32 +4,39 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/posts_padding"
     android:orientation="vertical">
-
-    <com.fiepi.moebooru.ui.widget.FixedImageView
-        android:id="@+id/iv_post"
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_post_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:background="@color/background"
-        android:paddingStart="@dimen/text_left_padding"
-        android:paddingTop="@dimen/text_padding"
-        android:textColor="@color/colorTextID" />
+        <com.fiepi.moebooru.ui.widget.FixedImageView
+            android:id="@+id/iv_post"
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/tv_post_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/text_left_padding"
-        android:paddingBottom="@dimen/text_padding"
-        android:textColor="@color/colorTextSize" />
+        <TextView
+            android:id="@+id/tv_post_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@color/transparent"
+            android:paddingStart="@dimen/text_left_padding"
+            android:paddingTop="@dimen/text_padding"
+            android:textColor="@color/colorTextID" />
+
+        <TextView
+            android:id="@+id/tv_post_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/text_left_padding"
+            android:paddingBottom="@dimen/text_padding"
+            android:textColor="@color/colorTextSize" />
+    </LinearLayout>
 
 </LinearLayout>
