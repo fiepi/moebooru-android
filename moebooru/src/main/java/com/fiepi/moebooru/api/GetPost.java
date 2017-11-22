@@ -27,7 +27,9 @@ import okhttp3.Response;
  */
 
 public class GetPost {
-    private String TAG = "GetPost";
+    private static final String TAG = GetPost.class.getSimpleName();
+    private static final String USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+
     private String mURL = null;
     private List<RawPostBean> mRawPostBeanList = new ArrayList<>();
     private List<PostBean> mPostBeanList = new ArrayList<>();
@@ -43,23 +45,26 @@ public class GetPost {
 
     public List<PostBean> getPosts(int limit, int page, String tags, String url){
         this.mURL = url;
+        Log.i(TAG,"请求体: limit:" + limit + " page:" + page + " tags:" + tags + " url:" +url);
         RequestBody requestBody;
         if (tags == "null"){
             requestBody = new FormBody.Builder()
                     .add("limit", String.valueOf(limit))
                     .add("page", String.valueOf(page))
                     .build();
+            Log.i(TAG,"请求体不带 Tag");
         }else {
             requestBody = new FormBody.Builder()
                     .add("limit", String.valueOf(limit))
                     .add("page", String.valueOf(page))
                     .add("tags", tags)
                     .build();
+            Log.i(TAG,"请求体带 Tag");
         }
         Log.i(TAG, "完成请求体");
         mPostBeanList = getPostBean(getRawPostBean(sendRequest(requestBody)));
-        if (mPostBeanList.isEmpty()){
-            Log.i(TAG,"结果为空");
+        if (mPostBeanList == null){
+            Log.i(TAG,"mPostBeanList 结果为空");
             return null;
         }
         Log.i(TAG, "获得数据");
@@ -71,15 +76,17 @@ public class GetPost {
         Request request = new Request.Builder()
                 .url(mURL)
                 .post(requestBody)
+                .header("User-Agent",USER_AGENT)
                 .build();
         try {
             response = mClient.newCall(request).execute();
 
             if (response.isSuccessful()){
-                Log.i(TAG,"response.isSuccessful");
+                Log.i(TAG,"response.isSuccessful. code:" + response.code());
                 return response.body().charStream();
             }else {
-                Log.i(TAG,"response.isFailed");
+                Log.i(TAG,"response.isFailed. code:" + response.code());
+//                Log.i(TAG, response.body().charStream().toString());
                 return null;
             }
         } catch (IOException e) {
@@ -91,6 +98,10 @@ public class GetPost {
 
     public List<PostBean> getPostBean(List<RawPostBean> rawPostBeans){
 
+        if (rawPostBeans == null){
+            Log.i(TAG,"rawPostBeans 为空");
+            return null;
+        }
         for (RawPostBean rawPostBean : rawPostBeans){
             PostBean postBean = new PostBean();
             postBean.setId(rawPostBean.id);
@@ -136,7 +147,10 @@ public class GetPost {
     }
 
     private List<RawPostBean> getRawPostBean(Reader reader){
-
+        if (reader == null){
+            Log.i(TAG,"reader 为空");
+            return null;
+        }
         JsonParser jsonParser = new JsonParser();
         JsonArray jsonArray = jsonParser.parse(reader).getAsJsonArray();
         String string = jsonArray.toString();

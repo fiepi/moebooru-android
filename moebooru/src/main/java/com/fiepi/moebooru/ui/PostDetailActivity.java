@@ -42,36 +42,4 @@ public class PostDetailActivity extends AppCompatActivity {
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mPOS);
     }
-
-    /**
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_download_post) {
-            String site = "Konachan.com";
-            PostBean postBean = mPostBeanItems.get(mViewPager.getCurrentItem());
-            new ImgDownloadUtils(postBean.getFile_url(), postBean.getTags(),
-                    mPostBeanItems.get(mViewPager.getCurrentItem()).getId(),
-                    site, this)
-                    .toDownload();
-            return true;
-        }else if (id == R.id.action_share_post){
-            String site = "https://konachan.com";
-            String url = site + "/post/show/" + mPostBeanItems.get(mViewPager.getCurrentItem()).getId();
-            new ShareUtils().shareText(url, this);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    **/
 }

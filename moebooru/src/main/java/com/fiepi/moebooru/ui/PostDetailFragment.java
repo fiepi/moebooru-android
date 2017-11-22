@@ -33,6 +33,7 @@ import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.adapter.TagDetailViewAdapter;
 import com.fiepi.moebooru.util.ImgDownloadUtils;
 import com.fiepi.moebooru.util.ShareUtils;
+import com.fiepi.moebooru.util.SharedPreferencesUtils;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
@@ -42,6 +43,12 @@ public class PostDetailFragment extends Fragment {
     private static final String TAG = PostDetailFragment.class.getSimpleName();
 
     private static final String POST = "POST";
+
+    private static final String namePref = "booru_used";
+    private static final String booruTypeKey = "booru_type";
+    private static final String booruNameKey = "booru_name";
+    private static final String booruDomainKey = "booru_domain";
+
     private PhotoView mPhotoView;
 //    private Toolbar mToolbar;
     private ProgressBar mProgressBar;
@@ -164,8 +171,10 @@ public class PostDetailFragment extends Fragment {
         mImageViewDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String site = "Konachan.com";
-                new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), site, getActivity()).toDownload();
+                String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
+                if (domain != "null"){
+                    new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), domain, getActivity()).toDownload();
+                }
             }
         });
     }
@@ -205,11 +214,11 @@ public class PostDetailFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_download_post) {
-            String site = "Konachan.com";
-            new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), site, getActivity()).toDownload();
+            String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
+            new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), domain, getActivity()).toDownload();
             return true;
         }else if (id == R.id.action_share_post){
-            String site = "https://konachan.com";
+            String site = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey) + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);;
             String url = site + "/post/show/" + mPostBean.getId();
             new ShareUtils().shareText(url, getActivity());
         }

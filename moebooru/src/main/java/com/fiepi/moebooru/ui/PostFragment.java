@@ -20,6 +20,7 @@ import com.fiepi.moebooru.ui.adapter.PostViewAdapter;
 import com.fiepi.moebooru.ui.listener.OnRcvScrollListener;
 import com.fiepi.moebooru.ui.listener.PostItemClickListener;
 import com.fiepi.moebooru.util.FileUtils;
+import com.fiepi.moebooru.util.SharedPreferencesUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +41,12 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     private Integer mPAGE = 1;
     private Integer mLIMIT = 30;
     private String mTAGS = "null";
-    private String mURL = "https://konachan.com/post.json";
+    private String mURL = "null";
+
+    private static final String namePref = "booru_used";
+    private static final String booruTypeKey = "booru_type";
+    private static final String booruNameKey = "booru_name";
+    private static final String booruDomainKey = "booru_domain";
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -70,6 +76,13 @@ public class PostFragment extends Fragment implements PostItemClickListener {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
+        String booruType = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey);
+        if (domain != "null"){
+            mURL = booruType + domain + "/post.json";
+        }
+        Log.i(TAG, "url:" + mURL);
     }
 
     @Override
@@ -161,6 +174,15 @@ public class PostFragment extends Fragment implements PostItemClickListener {
             if (isCancelled()){
                 return null;
             }
+            String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
+            String booruType = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey);
+            if (domain == "null"){
+                cancel(true);
+            }
+            mURL = booruType + domain + "/post.json";
+
+            Log.i(TAG, "url:" + mURL);
+
             return new GetPost().getPosts(mLIMIT, page, mTAGS, mURL);
         }
         @Override
@@ -181,7 +203,7 @@ public class PostFragment extends Fragment implements PostItemClickListener {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
             if (status == 0){
-                if (!postBeans.isEmpty()){
+                if (postBeans != null){
                     if (!mPostBeansItems.isEmpty()){
 //                        Log.i(TAG,"刷新成功");
                         if (postBeans.get(0).getId() > mPostBeansItems.get(0).getId()){
@@ -202,14 +224,18 @@ public class PostFragment extends Fragment implements PostItemClickListener {
                             mAdapter.notifyDataSetChanged();
                         }
                     }
+                }else {
+                    Log.i(TAG,"结果为空");
                 }
             }else if (status == 1){
-                if (!postBeans.isEmpty()){
+                if (postBeans != null){
 //                    Log.i(TAG,"正在加载的页数："+ page +" 接收数据大小：" + postBeans.size() + " 原有大小：" + mPostBeansItems.size());
                     for (int i = 0; i < postBeans.size(); i++){
                         mPostBeansItems.add(postBeans.get(i));
                         mAdapter.notifyDataSetChanged();
                     }
+                }else {
+                    Log.i(TAG,"结果为空");
                 }
             }
         }

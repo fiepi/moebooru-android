@@ -2,10 +2,8 @@ package com.fiepi.moebooru.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
-import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.api.GetPost;
 import com.fiepi.moebooru.api.RawPostBean;
 import com.fiepi.moebooru.bean.PostBean;
@@ -101,7 +99,7 @@ public class FileUtils {
         return file;
     }
 
-    private Context getContext(){
+    public Context getContext(){
         try {
             Application application = (Application) Class.forName("android.app.AppGlobals").getMethod("getInitialApplication").invoke(null, (Object[]) null);
             return application.getApplicationContext();

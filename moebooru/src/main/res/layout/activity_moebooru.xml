@@ -70,14 +70,35 @@
                             android:layout_height="?android:attr/actionBarSize"
                             app:contentInsetStart="0dp"
                             app:contentInsetEnd="0dp">
-                            <ImageView
-                                android:layout_gravity="end"
-                                android:paddingEnd="@dimen/text_left_padding"
-                                android:src="@drawable/ic_action_search"
-                                android:clickable="true"
-                                android:background="?android:selectableItemBackgroundBorderless"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical|end"
+                                android:paddingEnd="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp">
+
+                                <ImageView
+                                    android:id="@+id/iv_add_tag"
+                                    android:paddingEnd="5dp"
+                                    android:paddingStart="5dp"
+                                    android:src="@drawable/ic_action_add_tag"
+                                    android:clickable="true"
+                                    android:background="?android:selectableItemBackgroundBorderless"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <ImageView
+                                    android:id="@+id/iv_search"
+                                    android:paddingEnd="5dp"
+                                    android:src="@drawable/ic_action_search"
+                                    android:paddingStart="5dp"
+                                    android:clickable="true"
+                                    android:background="?android:selectableItemBackgroundBorderless"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+
                         </android.support.v7.widget.Toolbar>
                     </LinearLayout>
                 </android.support.design.widget.AppBarLayout>
