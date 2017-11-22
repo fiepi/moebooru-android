@@ -21,6 +21,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by fiepi on 11/15/17.
@@ -28,19 +29,43 @@ import okhttp3.Response;
 
 public class GetPost {
     private static final String TAG = GetPost.class.getSimpleName();
-    private static final String USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+    private static final String HEADER_ACCEPT = "Accept";
+    private static final String HEADER_ACCEPT_INFO = "application/json";
+
+    private static final String HEADER_USER_AGENT = "User-Agent";
+    private static final String HEADER_USER_AGENT_INFO = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+
+    private static final String HEADER_ACCEPT_ENCODING = "Accept-Encoding";
+    private static final String HEADER_ACCEPT_ENCODING_INFO = "gzip, deflate, br";
+
+    private static final String HEADER_CONNECTION = "Connection";
+    private static final String HEADER_CONNECTION_INFO = "keep-alive";
+
+    private static final String HEADER_CONTENT_TYPE = "Content-Type";
+    private static final String HEADER_CONTENT_TYPE_INFO = "application/json";
 
     private String mURL = null;
     private List<RawPostBean> mRawPostBeanList = new ArrayList<>();
     private List<PostBean> mPostBeanList = new ArrayList<>();
     private Gson mGson = new Gson();
-    private OkHttpClient mClient = new OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .build();
+
+    private HttpLoggingInterceptor logInterceptor;
+
+    private OkHttpClient mClient;
 
     public GetPost(){
-
+        logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.i(TAG+":Okhttp-Log", message);
+            }
+        });
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        mClient = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .addInterceptor(logInterceptor)
+                .build();
     }
 
     public List<PostBean> getPosts(int limit, int page, String tags, String url){
@@ -71,19 +96,21 @@ public class GetPost {
         return mPostBeanList;
     }
 
-    private Reader sendRequest(RequestBody requestBody){
+    private String sendRequest(RequestBody requestBody){
         Response response = null;
         Request request = new Request.Builder()
                 .url(mURL)
                 .post(requestBody)
-                .header("User-Agent",USER_AGENT)
+                .addHeader(HEADER_USER_AGENT, HEADER_USER_AGENT_INFO)
                 .build();
         try {
             response = mClient.newCall(request).execute();
 
             if (response.isSuccessful()){
                 Log.i(TAG,"response.isSuccessful. code:" + response.code());
-                return response.body().charStream();
+                String data = response.body().string();
+//                Log.i(TAG, data);
+                return data;
             }else {
                 Log.i(TAG,"response.isFailed. code:" + response.code());
 //                Log.i(TAG, response.body().charStream().toString());
@@ -146,13 +173,13 @@ public class GetPost {
 
     }
 
-    private List<RawPostBean> getRawPostBean(Reader reader){
-        if (reader == null){
-            Log.i(TAG,"reader 为空");
+    private List<RawPostBean> getRawPostBean(String data){
+        if (data == null){
+            Log.i(TAG,"string 为空");
             return null;
         }
         JsonParser jsonParser = new JsonParser();
-        JsonArray jsonArray = jsonParser.parse(reader).getAsJsonArray();
+        JsonArray jsonArray = jsonParser.parse(data).getAsJsonArray();
         String string = jsonArray.toString();
         if (!jsonArray.isJsonNull()){
             //保存 json 供下次打开时读取缓存中的图片

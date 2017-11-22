@@ -5,11 +5,13 @@
     android:padding="@dimen/text_padding"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:popupMenuStyle="@style/PopupMenu">
 
     <EditText
         android:id="@+id/et_booru_name"
         android:hint="Name"
+        android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <LinearLayout
@@ -32,6 +34,7 @@
         <EditText
             android:id="@+id/et_booru_input"
             android:hint="Domain Name"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

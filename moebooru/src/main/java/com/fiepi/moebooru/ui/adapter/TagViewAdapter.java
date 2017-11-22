@@ -3,22 +3,17 @@ package com.fiepi.moebooru.ui.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
+
 
 import com.fiepi.moebooru.R;
-import com.fiepi.moebooru.bean.TagBean;
 
-import java.nio.file.CopyOption;
 import java.util.ArrayList;
 import java.util.List;
 

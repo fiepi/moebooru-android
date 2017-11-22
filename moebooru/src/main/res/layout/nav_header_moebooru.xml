@@ -31,7 +31,7 @@
         android:clickable="true"
         android:background="?android:selectableItemBackground">
         <TextView
-            android:id="@+id/tv_site_name"
+            android:id="@+id/tv_nav_header_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -39,7 +39,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
-            android:id="@+id/tv_site_address"
+            android:id="@+id/tv_nav_header_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="im@fiepi.com" />

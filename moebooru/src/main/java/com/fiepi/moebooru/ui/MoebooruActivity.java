@@ -111,6 +111,13 @@ public class MoebooruActivity extends AppCompatActivity
         if (!booruIsExist()){
             initBooruDialog();
         }
+
+        //init nav header
+        TextView textViewName = headerView.findViewById(R.id.tv_nav_header_name);
+        TextView textViewUrl = headerView.findViewById(R.id.tv_nav_header_url);
+        textViewName.setText(new SharedPreferencesUtils().getStringValus(namePref, booruNameKey));
+        textViewUrl.setText(new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey)
+                + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey));
     }
 
     private List<String> initData(){

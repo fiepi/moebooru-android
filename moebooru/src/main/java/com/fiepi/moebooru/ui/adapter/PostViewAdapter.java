@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
+import com.fiepi.moebooru.GlideApp;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.listener.PostItemClickListener;
@@ -45,12 +43,10 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.PostVi
         holder.mTextViewID.setText("#" + mPostBeanItems.get(position).getId());
         holder.mTextViewSize.setText(whidth + "x" + height);
         holder.mImageViewPost.setWidthAndHeightWeight(whidth, height);
-        RequestOptions requestOptions = new RequestOptions()
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
-        Glide.with(holder.mImageViewPost.getContext())
+
+        GlideApp.with(holder.mImageViewPost.getContext())
                 .load(this.mPostBeanItems.get(position).getPreview_url())
-                .apply(requestOptions)
+                .centerCrop()
                 .into(holder.mImageViewPost);
 
         holder.mImageViewPost.setOnClickListener(new View.OnClickListener() {

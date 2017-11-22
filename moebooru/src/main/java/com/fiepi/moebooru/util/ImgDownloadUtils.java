@@ -25,11 +25,11 @@ public class ImgDownloadUtils {
     private List<TagBean> mTags;
     private long mID;
 
-    public ImgDownloadUtils(String url, List<TagBean> tagBeans, long id, String site, Context context){
+    public ImgDownloadUtils(String url, List<TagBean> tagBeans, long id, String domain, Context context){
         mUrl = url;
         mTags = tagBeans;
         mID = id;
-        mSite = site;
+        mSite = domain;
         mContext = context;
     }
 

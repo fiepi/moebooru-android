@@ -21,13 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bm.library.PhotoView;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.fiepi.moebooru.GlideApp;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.adapter.TagDetailViewAdapter;
@@ -35,6 +33,8 @@ import com.fiepi.moebooru.util.ImgDownloadUtils;
 import com.fiepi.moebooru.util.ShareUtils;
 import com.fiepi.moebooru.util.SharedPreferencesUtils;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
@@ -118,13 +118,9 @@ public class PostDetailFragment extends Fragment {
         originUrlLayout.setVisibility(LinearLayout.GONE);
         largerUrlLayout.setVisibility(LinearLayout.GONE);
 
-        RequestOptions requestOptions = new RequestOptions()
-                .centerInside()
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
-
-        Glide.with(getContext())
+        GlideApp.with(getContext())
                 .load(mPostBean.getSample_url())
-                .apply(requestOptions)
+                .fitCenter()
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,
@@ -140,6 +136,23 @@ public class PostDetailFragment extends Fragment {
                     }
                 })
                 .into(mPhotoView);
+
+        /**
+        Picasso.with(getContext())
+                .load(mPostBean.getSample_url())
+                .into(mPhotoView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                });
+         **/
+
         return rootView;
     }
 
