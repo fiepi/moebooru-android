@@ -8,14 +8,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 
 import com.fiepi.moebooru.R;
+import com.fiepi.moebooru.bean.TagSearchBean;
+import com.fiepi.moebooru.util.ClipboardUtils;
+import com.fiepi.moebooru.util.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fiepi on 11/18/17.
@@ -24,12 +30,17 @@ import java.util.List;
 public class TagViewAdapter extends RecyclerView.Adapter<TagViewAdapter.TagViewHolder> {
     private static final String TAG = TagViewAdapter.class.getSimpleName();
 
-    private List<String> mTags = new ArrayList<>();
+    private static final String nameTagPref = "tag_search";
+
     private Context mContext;
 
-    public TagViewAdapter(List<String> items, Context context){
-        mTags = items;
+    private List<String> mTagsName;
+    private List<?> mTagsStatus;
+    private Map<String,?> mTagsMap;
+
+    public TagViewAdapter(Context context){
         mContext = context;
+        getTags();
     }
 
     @Override
@@ -41,8 +52,16 @@ public class TagViewAdapter extends RecyclerView.Adapter<TagViewAdapter.TagViewH
 
     @Override
     public void onBindViewHolder(TagViewHolder holder, int position) {
-        holder.mCheckBoxTag.setText(mTags.get(position));
-//        Log.i(TAG, mTags.get(position));
+        holder.mCheckBoxTag.setText(mTagsName.get(position));
+        holder.mCheckBoxTag.setChecked((Boolean) mTagsStatus.get(position));
+
+        holder.mCheckBoxTag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                new SharedPreferencesUtils().saveBoolean(nameTagPref, mTagsName.get(position), b);
+            }
+        });
+
         holder.mImageViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,10 +75,13 @@ public class TagViewAdapter extends RecyclerView.Adapter<TagViewAdapter.TagViewH
                         Log.i(TAG, "click Menu");
                         switch (menuItem.getItemId()) {
                             case R.id.menu_copy:
-
+                                new ClipboardUtils().copy(mTagsName.get(position), mContext);
+                                Toast.makeText(mContext, mTagsName.get(position) + " has been copied.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.menu_remove:
-
+                                new SharedPreferencesUtils().removeValus(nameTagPref, mTagsName.get(position));
+                                getTags();
+                                notifyDataSetChanged();
                                 break;
                         }
                         return false;
@@ -67,11 +89,23 @@ public class TagViewAdapter extends RecyclerView.Adapter<TagViewAdapter.TagViewH
                 });
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
-        return mTags.size();
+        return mTagsName.size();
+    }
+
+    private void getTags(){
+        mTagsMap = new SharedPreferencesUtils().getALL(nameTagPref);
+        mTagsName = new ArrayList<String>(mTagsMap.keySet());
+        mTagsStatus = new ArrayList<>(mTagsMap.values());
+    }
+
+    public void TagChanged() {
+        getTags();
+        notifyDataSetChanged();
     }
 
 

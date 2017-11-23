@@ -48,6 +48,8 @@ public class MoebooruActivity extends AppCompatActivity
     private static final String booruNameKey = "booru_name";
     private static final String booruDomainKey = "booru_domain";
 
+    private static final String nameTagPref = "tag_search";
+
     private Fragment mPostFragment = new PostFragment();
     private FragmentManager mFragmentManager = getSupportFragmentManager();
 
@@ -84,7 +86,8 @@ public class MoebooruActivity extends AppCompatActivity
         mTagRecyclerView = (RecyclerView) this.findViewById(R.id.rv_tags);
         mTagLayoutManager = new LinearLayoutManager(this);
         mTagRecyclerView.setLayoutManager(mTagLayoutManager);
-        mTagAdapter = new TagViewAdapter(initData(), this);
+
+        mTagAdapter = new TagViewAdapter(this);
         mTagRecyclerView.setAdapter(mTagAdapter);
 
         View headerView = leftNavigationView.getHeaderView(0);
@@ -252,10 +255,8 @@ public class MoebooruActivity extends AppCompatActivity
                         if (inputString.length() != 0){
                             inputString = inputString.replaceAll("\\s*", "");
                             if (inputString.length() != 0){
-                                SharedPreferences tagPref = MoebooruActivity.this.getSharedPreferences("tags", MoebooruActivity.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = tagPref.edit();
-                                editor.putBoolean(inputString, false);
-                                editor.commit();
+                                new SharedPreferencesUtils().saveBoolean(nameTagPref, inputString, false);
+                                mTagAdapter.TagChanged();
                             }
                         }
                         Log.i(TAG, "输入内容："+inputString);
@@ -277,21 +278,6 @@ public class MoebooruActivity extends AppCompatActivity
             }
         });
     }
-
-    private void getTags(){
-        SharedPreferences tagPref = MoebooruActivity.this.getSharedPreferences("tags", MoebooruActivity.MODE_PRIVATE);
-        Map<String, ?> allTag = tagPref.getAll();
-        String tags = "";
-        for (Map.Entry<String, ?>  entry : allTag.entrySet()){
-            if (tags == ""){
-                tags = entry.getKey();
-            }else {
-                tags = tags + " " + entry.getKey();
-            }
-        }
-        Log.i(TAG, tags);
-    }
-
 
     private void getSelectedTags(){
         SharedPreferences tagPref = MoebooruActivity.this.getSharedPreferences("tags", MoebooruActivity.MODE_PRIVATE);

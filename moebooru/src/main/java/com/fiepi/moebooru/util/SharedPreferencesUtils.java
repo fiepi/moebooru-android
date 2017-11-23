@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * Created by fiepi on 11/22/17.
@@ -41,5 +42,19 @@ public class SharedPreferencesUtils {
         string = sharedPreferences.getString(key, "null");
         Log.i(TAG, sharedPreferences.getString(key, "null"));
         return string;
+    }
+
+    public Map<String,?> getALL(String namePref){
+        Context appContext = new FileUtils().getContext();
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
+        return sharedPreferences.getAll();
+    }
+
+    public void removeValus(String namePref, String nameKey){
+        Context appContext = new FileUtils().getContext();
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(nameKey);
+        editor.commit();
     }
 }
