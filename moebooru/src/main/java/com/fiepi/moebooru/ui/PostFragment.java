@@ -56,8 +56,6 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     private PullPost mPullPostTask = null;
     private List<PostBean> mPostBeansItems = new ArrayList<>();
 
-    private FragmentManager mFragmentManager;
-
     public PostFragment() {
     }
 

@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context="com.fiepi.moebooru.ui.PostSearchActivity">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppThemeAppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_search"
+            android:paddingTop="@dimen/statusbar_padding"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/transparent"
+            app:title="Search"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ToolbarPopupTheme" />
+    </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <app:android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/scroll_view_search"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_post_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/fragment_post_item"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </app:android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>
