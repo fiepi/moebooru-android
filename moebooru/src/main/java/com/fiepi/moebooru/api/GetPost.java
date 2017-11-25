@@ -12,15 +12,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -59,23 +56,6 @@ public class GetPost {
         if (tags != "null"){
             mURL = mURL+"&tags="+tags;
         }
-//        Log.i(TAG,"请求体: limit:" + limit + " page:" + page + " tags:" + tags + " url:" +url);
-//        RequestBody requestBody;
-//        if (tags == "null"){
-//            requestBody = new FormBody.Builder()
-//                    .add("limit", String.valueOf(limit))
-//                    .add("page", String.valueOf(page))
-//                    .build();
-//            Log.i(TAG,"请求体不带 Tag");
-//        }else {
-//            requestBody = new FormBody.Builder()
-//                    .add("limit", String.valueOf(limit))
-//                    .add("page", String.valueOf(page))
-//                    .add("tags", tags)
-//                    .build();
-//            Log.i(TAG,"请求体带 Tag");
-//        }
-        Log.i(TAG, "完成请求体");
         mPostBeanList = getPostBean(getRawPostBean(sendRequest()));
         if (mPostBeanList == null){
             Log.i(TAG,"mPostBeanList 结果为空");

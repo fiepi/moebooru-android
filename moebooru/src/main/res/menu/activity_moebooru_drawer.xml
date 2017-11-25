@@ -12,10 +12,6 @@
             android:id="@+id/nav_booru"
             android:icon="@drawable/ic_action_boorus"
             android:title="Boorus" />
-        <item
-            android:id="@+id/nav_download"
-            android:icon="@drawable/ic_action_download"
-            android:title="Download" />
     </group>
 
     <item

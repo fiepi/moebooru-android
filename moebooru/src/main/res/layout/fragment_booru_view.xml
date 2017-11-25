@@ -6,21 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_gravity="bottom|end"
-        android:paddingEnd="30dp"
-        android:paddingBottom="150dp"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_booru_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_add"
-            app:layout_anchorGravity="bottom|right|end"
-            app:elevation="3dp"/>
-
-    </LinearLayout>
 </FrameLayout>

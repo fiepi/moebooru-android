@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fiepi.moebooru.AppConfig.*;
+
 public class PostFragment extends Fragment implements PostItemClickListener {
 
     private static final String TAG = PostFragment.class.getSimpleName();
@@ -41,11 +43,6 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     private Integer mLIMIT = 38;
     private String mTAGS = "null";
     private String mURL = "null";
-
-    private static final String namePref = "booru_used";
-    private static final String booruTypeKey = "booru_type";
-    private static final String booruNameKey = "booru_name";
-    private static final String booruDomainKey = "booru_domain";
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -74,8 +71,8 @@ public class PostFragment extends Fragment implements PostItemClickListener {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
-        String booruType = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey);
+        String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
+        String booruType = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey);
         if (domain != "null"){
             mURL = booruType + domain + "/post.json";
         }
@@ -171,8 +168,8 @@ public class PostFragment extends Fragment implements PostItemClickListener {
             if (isCancelled()){
                 return null;
             }
-            String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
-            String booruType = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey);
+            String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
+            String booruType = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey);
             if (domain == "null"){
                 cancel(true);
             }

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.fiepi.moebooru.AppConfig;
 import com.fiepi.moebooru.api.GetPost;
 import com.fiepi.moebooru.api.RawPostBean;
 import com.fiepi.moebooru.bean.PostBean;
@@ -25,14 +26,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fiepi.moebooru.AppConfig.*;
+
 /**
  * Created by fiepi on 11/11/17.
  */
 
 public class FileUtils {
-    private static final String mFileName = "posts.json";
+    private String mFileName = "post.json";
 
     public FileUtils(){
+
     }
 
     public List<PostBean> getPostBeanFromFile() throws IOException {
@@ -93,10 +97,19 @@ public class FileUtils {
         return null;
     }
     public File getFile(){
-        File file = new File(getContext().getCacheDir(), mFileName);
+        File file = new File(getContext().getCacheDir(), getFileName());
 //        File path = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 //        File file2 = new File(path, mFileName);
         return file;
+    }
+
+    private String getFileName(){
+        SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+        String domain = sharedPreferencesUtils.getStringValus(booruUsedPref, booruDomainKey);
+        if (domain != "null"){
+            mFileName = domain+"_post.json";
+        }
+        return mFileName;
     }
 
     public Context getContext(){

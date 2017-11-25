@@ -40,7 +40,7 @@ public class SharedPreferencesUtils {
         SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
         String string = "null";
         string = sharedPreferences.getString(key, "null");
-        Log.i(TAG, sharedPreferences.getString(key, "null"));
+//        Log.i(TAG, sharedPreferences.getString(key, "null"));
         return string;
     }
 

@@ -2,6 +2,7 @@ package com.fiepi.moebooru.ui;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -163,7 +164,8 @@ public class MoebooruActivity extends AppCompatActivity
         booruDialogBuilder.setTitle("Add booru");
         booruDialogBuilder.setView(linearLayout);
         booruDialogBuilder.setCancelable(false);
-        booruDialogBuilder.setPositiveButton("ADD",null);
+        booruDialogBuilder.setPositiveButton("OK",null);
+        booruDialogBuilder.setNegativeButton("Cancel", null);
 
         textViewType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +191,7 @@ public class MoebooruActivity extends AppCompatActivity
                 });
             }
         });
+
 
         final AlertDialog booruAlertDialog = booruDialogBuilder.create();
 
@@ -223,6 +226,14 @@ public class MoebooruActivity extends AppCompatActivity
                             Toast.makeText(MoebooruActivity.this, "Input can not be empty.", Toast.LENGTH_LONG).show();
 
                         }
+                    }
+                });
+
+                Button cancelButton = booruAlertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogInterface.dismiss();
                     }
                 });
             }
@@ -318,15 +329,14 @@ public class MoebooruActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.frag_moebooru, fragment)
                     .commit();
-
-        } else if (id == R.id.nav_download) {
-
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_about) {
-
+            Uri uri = Uri.parse("https://github.com/fiepi/moebooru-android");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
