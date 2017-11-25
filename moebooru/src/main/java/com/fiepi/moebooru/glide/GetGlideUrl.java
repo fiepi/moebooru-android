@@ -2,6 +2,7 @@ package com.fiepi.moebooru.glide;
 
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.fiepi.moebooru.AppConfig;
 
 /**
  * Created by fiepi on 11/24/17.

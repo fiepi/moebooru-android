@@ -37,19 +37,13 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import static com.fiepi.moebooru.AppConfig.*;
 
 public class MoebooruActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MoebooruActivity.class.getSimpleName();
-
-    private static final String namePref = "booru_used";
-    private static final String booruTypeKey = "booru_type";
-    private static final String booruNameKey = "booru_name";
-    private static final String booruDomainKey = "booru_domain";
-
-    private static final String nameTagPref = "tag_search";
 
     private Fragment mPostFragment = new PostFragment();
     private FragmentManager mFragmentManager = getSupportFragmentManager();
@@ -58,8 +52,6 @@ public class MoebooruActivity extends AppCompatActivity
     private RecyclerView mTagRecyclerView;
     private RecyclerView.LayoutManager mTagLayoutManager;
     private NavBooruFragment mNavBooruFragment = new NavBooruFragment();
-
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,23 +113,21 @@ public class MoebooruActivity extends AppCompatActivity
         //init nav header
         TextView textViewName = headerView.findViewById(R.id.tv_nav_header_name);
         TextView textViewUrl = headerView.findViewById(R.id.tv_nav_header_url);
-        textViewName.setText(new SharedPreferencesUtils().getStringValus(namePref, booruNameKey));
-        textViewUrl.setText(new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey)
-                + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey));
+        textViewName.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruNameKey));
+        textViewUrl.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey)
+                + new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey));
 
         ImageView imageViewLogo = headerView.findViewById(R.id.iv_logo);
         imageViewLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initBooruDialog();
-                textViewName.setText(new SharedPreferencesUtils().getStringValus(namePref, booruNameKey));
-                textViewUrl.setText(new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey)
-                        + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey));
+                textViewName.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruNameKey));
+                textViewUrl.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey)
+                        + new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey));
             }
         });
 
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     private List<String> initData(){
@@ -187,11 +177,11 @@ public class MoebooruActivity extends AppCompatActivity
                         switch (item.getItemId()) {
                             case R.id.booru_http:
                                 textViewType.setText("http://");
-                                new SharedPreferencesUtils().saveString(namePref, booruTypeKey, "http://");
+                                new SharedPreferencesUtils().saveString(booruUsedPref, booruTypeKey, "http://");
                                 break;
                             case R.id.booru_https:
                                 textViewType.setText("https://");
-                                new SharedPreferencesUtils().saveString(namePref, booruTypeKey, "https://");
+                                new SharedPreferencesUtils().saveString(booruUsedPref, booruTypeKey, "https://");
                                 break;
                         }
                         return false;
@@ -213,19 +203,19 @@ public class MoebooruActivity extends AppCompatActivity
                         name = name.replaceAll("\\s*", "");
                         String domain = editTextDomain.getText().toString();
                         domain = domain.replaceAll("\\s*", "");
-                        String type = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey);
+                        String type = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey);
                         if (!name.isEmpty() || !domain.isEmpty()){
                             if (type == "null"){
                                 SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
-                                sharedPreferencesUtils.saveString(namePref, booruNameKey, name);
-                                sharedPreferencesUtils.saveString(namePref, booruDomainKey, domain);
-                                sharedPreferencesUtils.saveString(namePref, booruTypeKey, "http://");
+                                sharedPreferencesUtils.saveString(booruUsedPref, booruNameKey, name);
+                                sharedPreferencesUtils.saveString(booruUsedPref, booruDomainKey, domain);
+                                sharedPreferencesUtils.saveString(booruUsedPref, booruTypeKey, "http://");
                                 Toast.makeText(MoebooruActivity.this, "Added successfully!", Toast.LENGTH_LONG).show();
                                 dialogInterface.dismiss();
                             }else {
                                 SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
-                                sharedPreferencesUtils.saveString(namePref, booruNameKey, name);
-                                sharedPreferencesUtils.saveString(namePref, booruDomainKey, domain);
+                                sharedPreferencesUtils.saveString(booruUsedPref, booruNameKey, name);
+                                sharedPreferencesUtils.saveString(booruUsedPref, booruDomainKey, domain);
                                 Toast.makeText(MoebooruActivity.this, "Added successfully!", Toast.LENGTH_LONG).show();
                                 dialogInterface.dismiss();
                             }
@@ -241,7 +231,7 @@ public class MoebooruActivity extends AppCompatActivity
     }
 
     private Boolean booruIsExist(){
-        if (new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey) == "null"){
+        if (new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey) == "null"){
             return false;
         }
         return true;
@@ -272,7 +262,7 @@ public class MoebooruActivity extends AppCompatActivity
                         if (inputString.length() != 0){
                             inputString = inputString.replaceAll("\\s*", "");
                             if (inputString.length() != 0){
-                                new SharedPreferencesUtils().saveBoolean(nameTagPref, inputString, false);
+                                new SharedPreferencesUtils().saveBoolean(tagPref, inputString, false);
                                 mTagAdapter.TagChanged();
                             }
                         }
@@ -286,37 +276,12 @@ public class MoebooruActivity extends AppCompatActivity
         mImageViewSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAnalytics("search", "tags search", "search");
                 Intent intent = new Intent(MoebooruActivity.this, PostSearchActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    private void getAnalytics(String id, String name, String type){
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-    }
-
-    private void getSelectedTags(){
-        SharedPreferences tagPref = MoebooruActivity.this.getSharedPreferences("tags", MoebooruActivity.MODE_PRIVATE);
-        Map<String, ?> allTag = tagPref.getAll();
-        String tags = "";
-//        Log.i(TAG, tagPref.getAll().toString());
-        for (Map.Entry<String, ?>  entry : allTag.entrySet()){
-            if(entry.getValue().equals(true)){
-                if (tags == ""){
-                    tags = entry.getKey();
-                }else {
-                    tags = tags + "+" + entry.getKey();
-                }
-            }
-        }
-//        Log.i(TAG, "TAG: "+ tags);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;

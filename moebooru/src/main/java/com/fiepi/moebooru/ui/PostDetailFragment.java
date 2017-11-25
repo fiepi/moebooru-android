@@ -37,16 +37,13 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
 
+import static com.fiepi.moebooru.AppConfig.*;
+
 public class PostDetailFragment extends Fragment {
 
     private static final String TAG = PostDetailFragment.class.getSimpleName();
 
     private static final String POST = "POST";
-
-    private static final String namePref = "booru_used";
-    private static final String booruTypeKey = "booru_type";
-    private static final String booruNameKey = "booru_name";
-    private static final String booruDomainKey = "booru_domain";
 
     private PhotoView mPhotoView;
 //    private Toolbar mToolbar;
@@ -167,7 +164,7 @@ public class PostDetailFragment extends Fragment {
         mImageViewDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
+                String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
                 if (domain != "null"){
                     new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), domain, getActivity()).toDownload();
                 }
@@ -210,11 +207,12 @@ public class PostDetailFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_download_post) {
-            String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
+            String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
             new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), domain, getActivity()).toDownload();
             return true;
         }else if (id == R.id.action_share_post){
-            String site = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey) + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);;
+            String site = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey)
+                    + new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
             String url = site + "/post/show/" + mPostBean.getId();
             new ShareUtils().shareText(url, getActivity());
         }

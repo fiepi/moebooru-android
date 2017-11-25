@@ -57,4 +57,21 @@ public class SharedPreferencesUtils {
         editor.remove(nameKey);
         editor.commit();
     }
+
+    public String getSelectedTags(String namePref){
+        Context appContext = new FileUtils().getContext();
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
+        Map<String, ?> allTag = sharedPreferences.getAll();
+        String tags = "";
+        for (Map.Entry<String, ?>  entry : allTag.entrySet()){
+            if(entry.getValue().equals(true)){
+                if (tags == ""){
+                    tags = entry.getKey();
+                }else {
+                    tags = tags + "+" + entry.getKey();
+                }
+            }
+        }
+        return tags;
+    }
 }

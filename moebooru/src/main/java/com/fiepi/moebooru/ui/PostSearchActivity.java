@@ -16,21 +16,19 @@ import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.adapter.PostViewAdapter;
 import com.fiepi.moebooru.ui.listener.OnRcvScrollListener;
 import com.fiepi.moebooru.ui.listener.PostItemClickListener;
+import com.fiepi.moebooru.util.AnalyticsUtils;
 import com.fiepi.moebooru.util.SharedPreferencesUtils;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.fiepi.moebooru.AppConfig.*;
+
 public class PostSearchActivity extends AppCompatActivity implements PostItemClickListener {
 
     private static final String TAG = PostSearchActivity.class.getSimpleName();
-    private static final String namePref = "booru_used";
-    private static final String booruTypeKey = "booru_type";
-    private static final String booruNameKey = "booru_name";
-    private static final String booruDomainKey = "booru_domain";
-
-    private static final String nameTagPref = "tag_search";
 
     private static final int SPAN_COUNT = 3;
 
@@ -52,6 +50,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
 
     private PullPost mPullPostTask = null;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +78,8 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
 
         new PullPost(0, mPAGE).execute();
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        new AnalyticsUtils().getAnalytics(TAG, mTAGS, "search" ,mFirebaseAnalytics);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
     }
 
     private String getSelectedTags(){
-        Map<String, ?> allTag = new SharedPreferencesUtils().getALL(nameTagPref);
+        Map<String, ?> allTag = new SharedPreferencesUtils().getALL(tagPref);
         String tags = "";
 //        Log.i(TAG, tagPref.getAll().toString());
         for (Map.Entry<String, ?>  entry : allTag.entrySet()){
@@ -161,8 +162,8 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
             if (isCancelled()){
                 return null;
             }
-            String domain = new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey);
-            String booruType = new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey);
+            String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
+            String booruType = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey);
             if (domain == "null"){
                 cancel(true);
             }

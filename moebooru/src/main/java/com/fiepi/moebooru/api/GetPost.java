@@ -2,6 +2,7 @@ package com.fiepi.moebooru.api;
 
 import android.util.Log;
 
+import com.fiepi.moebooru.AppConfig;
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.bean.TagBean;
 import com.fiepi.moebooru.util.FileUtils;
@@ -29,21 +30,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class GetPost {
     private static final String TAG = GetPost.class.getSimpleName();
-    private static final String HEADER_ACCEPT = "Accept";
-    private static final String HEADER_ACCEPT_INFO = "application/json";
-
-    private static final String HEADER_USER_AGENT = "User-Agent";
-    private static final String HEADER_USER_AGENT_INFO = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
-
-    private static final String HEADER_ACCEPT_ENCODING = "Accept-Encoding";
-    private static final String HEADER_ACCEPT_ENCODING_INFO = "gzip, deflate, br";
-
-    private static final String HEADER_CONNECTION = "Connection";
-    private static final String HEADER_CONNECTION_INFO = "keep-alive";
-
-    private static final String HEADER_CONTENT_TYPE = "Content-Type";
-    private static final String HEADER_CONTENT_TYPE_INFO = "application/json";
-
     private String mURL = null;
     private List<RawPostBean> mRawPostBeanList = new ArrayList<>();
     private List<PostBean> mPostBeanList = new ArrayList<>();
@@ -104,7 +90,7 @@ public class GetPost {
         Request request = new Request.Builder()
                 .url(mURL)
                 .get()
-                .addHeader(HEADER_USER_AGENT, HEADER_USER_AGENT_INFO)
+                .addHeader(AppConfig.HEADER_USER_AGENT, AppConfig.HEADER_USER_AGENT_INFO)
                 .build();
         try {
             response = mClient.newCall(request).execute();
