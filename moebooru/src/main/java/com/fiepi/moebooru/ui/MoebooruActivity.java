@@ -121,6 +121,17 @@ public class MoebooruActivity extends AppCompatActivity
         textViewName.setText(new SharedPreferencesUtils().getStringValus(namePref, booruNameKey));
         textViewUrl.setText(new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey)
                 + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey));
+
+        ImageView imageViewLogo = headerView.findViewById(R.id.iv_logo);
+        imageViewLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initBooruDialog();
+                textViewName.setText(new SharedPreferencesUtils().getStringValus(namePref, booruNameKey));
+                textViewUrl.setText(new SharedPreferencesUtils().getStringValus(namePref, booruTypeKey)
+                        + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey));
+            }
+        });
     }
 
     private List<String> initData(){
@@ -289,7 +300,7 @@ public class MoebooruActivity extends AppCompatActivity
                 if (tags == ""){
                     tags = entry.getKey();
                 }else {
-                    tags = tags + " " + entry.getKey();
+                    tags = tags + "+" + entry.getKey();
                 }
             }
         }

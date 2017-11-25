@@ -69,25 +69,28 @@ public class GetPost {
     }
 
     public List<PostBean> getPosts(int limit, int page, String tags, String url){
-        this.mURL = url;
-        Log.i(TAG,"请求体: limit:" + limit + " page:" + page + " tags:" + tags + " url:" +url);
-        RequestBody requestBody;
-        if (tags == "null"){
-            requestBody = new FormBody.Builder()
-                    .add("limit", String.valueOf(limit))
-                    .add("page", String.valueOf(page))
-                    .build();
-            Log.i(TAG,"请求体不带 Tag");
-        }else {
-            requestBody = new FormBody.Builder()
-                    .add("limit", String.valueOf(limit))
-                    .add("page", String.valueOf(page))
-                    .add("tags", tags)
-                    .build();
-            Log.i(TAG,"请求体带 Tag");
+        this.mURL = url+"?page="+page+"&limit="+limit;
+        if (tags != "null"){
+            mURL = mURL+"&tags="+tags;
         }
+//        Log.i(TAG,"请求体: limit:" + limit + " page:" + page + " tags:" + tags + " url:" +url);
+//        RequestBody requestBody;
+//        if (tags == "null"){
+//            requestBody = new FormBody.Builder()
+//                    .add("limit", String.valueOf(limit))
+//                    .add("page", String.valueOf(page))
+//                    .build();
+//            Log.i(TAG,"请求体不带 Tag");
+//        }else {
+//            requestBody = new FormBody.Builder()
+//                    .add("limit", String.valueOf(limit))
+//                    .add("page", String.valueOf(page))
+//                    .add("tags", tags)
+//                    .build();
+//            Log.i(TAG,"请求体带 Tag");
+//        }
         Log.i(TAG, "完成请求体");
-        mPostBeanList = getPostBean(getRawPostBean(sendRequest(requestBody)));
+        mPostBeanList = getPostBean(getRawPostBean(sendRequest()));
         if (mPostBeanList == null){
             Log.i(TAG,"mPostBeanList 结果为空");
             return null;
@@ -96,11 +99,11 @@ public class GetPost {
         return mPostBeanList;
     }
 
-    private String sendRequest(RequestBody requestBody){
+    private String sendRequest(){
         Response response = null;
         Request request = new Request.Builder()
                 .url(mURL)
-                .post(requestBody)
+                .get()
                 .addHeader(HEADER_USER_AGENT, HEADER_USER_AGENT_INFO)
                 .build();
         try {

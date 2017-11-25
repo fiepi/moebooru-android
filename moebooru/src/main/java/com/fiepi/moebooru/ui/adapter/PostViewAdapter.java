@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fiepi.moebooru.GlideApp;
+import com.fiepi.moebooru.glide.GetGlideUrl;
+import com.fiepi.moebooru.glide.GlideApp;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.listener.PostItemClickListener;
@@ -45,8 +46,8 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.PostVi
         holder.mImageViewPost.setWidthAndHeightWeight(whidth, height);
 
         GlideApp.with(holder.mImageViewPost.getContext())
-                .load(this.mPostBeanItems.get(position).getPreview_url())
-                .centerCrop()
+                .load(new GetGlideUrl().makeGlideUrl(this.mPostBeanItems.get(position).getPreview_url()))
+                .fitCenter()
                 .into(holder.mImageViewPost);
 
         holder.mImageViewPost.setOnClickListener(new View.OnClickListener() {

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
@@ -15,8 +16,8 @@ android {
         applicationId 'com.fiepi.moebooru'
         minSdkVersion 23
         targetSdkVersion 26
-        versionCode 6
-        versionName '0.0.6'
+        versionCode 8
+        versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config_release
     }
@@ -38,8 +39,8 @@ android {
             minSdkVersion 23
             applicationId 'com.fiepi.moebooru'
             targetSdkVersion 26
-            versionCode 6
-            versionName '0.0.6'
+            versionCode 8
+            versionName VERSION_NAME
             signingConfig signingConfigs.config_release
         }
         beta {
@@ -48,8 +49,8 @@ android {
             minSdkVersion 23
             applicationId 'com.fiepi.moebooru.debug'
             targetSdkVersion 26
-            versionCode 6
-            versionName '0.0.6'
+            versionCode 8
+            versionName VERSION_NAME
             signingConfig signingConfigs.config_release
         }
     }
@@ -84,7 +85,4 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.bm.photoview:library:1.4.1'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
-
-    implementation "com.squareup.picasso:picasso:2.5.2"
-
 }

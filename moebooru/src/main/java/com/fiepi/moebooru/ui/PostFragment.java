@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -39,7 +38,7 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     private static final String ARG_POST_ITEM = "ARG_POST_ITEM";
 
     private Integer mPAGE = 1;
-    private Integer mLIMIT = 30;
+    private Integer mLIMIT = 38;
     private String mTAGS = "null";
     private String mURL = "null";
 

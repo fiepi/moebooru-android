@@ -25,7 +25,8 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.fiepi.moebooru.GlideApp;
+import com.fiepi.moebooru.glide.GetGlideUrl;
+import com.fiepi.moebooru.glide.GlideApp;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.adapter.TagDetailViewAdapter;
@@ -33,8 +34,6 @@ import com.fiepi.moebooru.util.ImgDownloadUtils;
 import com.fiepi.moebooru.util.ShareUtils;
 import com.fiepi.moebooru.util.SharedPreferencesUtils;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 
@@ -119,7 +118,7 @@ public class PostDetailFragment extends Fragment {
         largerUrlLayout.setVisibility(LinearLayout.GONE);
 
         GlideApp.with(getContext())
-                .load(mPostBean.getSample_url())
+                .load(new GetGlideUrl().makeGlideUrl(mPostBean.getSample_url()))
                 .fitCenter()
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -136,22 +135,6 @@ public class PostDetailFragment extends Fragment {
                     }
                 })
                 .into(mPhotoView);
-
-        /**
-        Picasso.with(getContext())
-                .load(mPostBean.getSample_url())
-                .into(mPhotoView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        mProgressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onError() {
-                        mProgressBar.setVisibility(View.GONE);
-                    }
-                });
-         **/
 
         return rootView;
     }

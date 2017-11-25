@@ -39,7 +39,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
     private static final String ARG_POST_ITEM = "ARG_POST_ITEM";
 
     private Integer mPAGE = 1;
-    private Integer mLIMIT = 30;
+    private Integer mLIMIT = 38;
     private String mTAGS = "null";
     private String mURL = "null";
 
@@ -101,7 +101,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
                 if (tags == ""){
                     tags = entry.getKey();
                 }else {
-                    tags = tags + " " + entry.getKey();
+                    tags = tags + "+" + entry.getKey();
                 }
             }
         }

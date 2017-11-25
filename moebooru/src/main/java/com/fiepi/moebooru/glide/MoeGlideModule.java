@@ -1,4 +1,4 @@
-package com.fiepi.moebooru;
+package com.fiepi.moebooru.glide;
 
 import android.content.Context;
 
@@ -26,7 +26,7 @@ public final class MoeGlideModule extends AppGlideModule {
                 .build();
         // default
 //        builder.setMemoryCache(new LruResourceCache(calculator.getMemoryCacheSize()));
-        int memoryCacheSizeBytes = 1024 * 1024 * 256; // 256mb
+        int memoryCacheSizeBytes = 1024 * 1024 * 512;
         builder.setMemoryCache(new LruResourceCache(memoryCacheSizeBytes));
         int diskCacheSizeBytes = 1024 * 1024 * 512; // 512 MB
         builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskCacheSizeBytes));
