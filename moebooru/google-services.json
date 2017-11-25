@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "528191874988-762qvg1j87lje2ouadpsaro0qti5gso2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fiepi.moebooru",
+            "certificate_hash": "2e7e0a011e0bf4c606fb339d6df5bd361a428cb2"
+          }
+        },
+        {
           "client_id": "528191874988-15ir59bgugviblm0psv5bqepgm26ndba.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,57 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528191874988-15ir59bgugviblm0psv5bqepgm26ndba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528191874988:android:ec3c79982f66fd74",
+        "android_client_info": {
+          "package_name": "com.fiepi.moebooru.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528191874988-vanv1na9e4020f1lctp9ss6dd1be0la5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fiepi.moebooru.debug",
+            "certificate_hash": "2e7e0a011e0bf4c606fb339d6df5bd361a428cb2"
+          }
+        },
+        {
+          "client_id": "528191874988-15ir59bgugviblm0psv5bqepgm26ndba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQVt00uewzBpgEr9FSDhVctYuHP6OcIzw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528191874988-15ir59bgugviblm0psv5bqepgm26ndba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

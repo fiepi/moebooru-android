@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.ui.adapter.TagViewAdapter;
 import com.fiepi.moebooru.util.SharedPreferencesUtils;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,8 @@ public class MoebooruActivity extends AppCompatActivity
     private RecyclerView mTagRecyclerView;
     private RecyclerView.LayoutManager mTagLayoutManager;
     private NavBooruFragment mNavBooruFragment = new NavBooruFragment();
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +135,9 @@ public class MoebooruActivity extends AppCompatActivity
                         + new SharedPreferencesUtils().getStringValus(namePref, booruDomainKey));
             }
         });
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     private List<String> initData(){
@@ -280,14 +286,19 @@ public class MoebooruActivity extends AppCompatActivity
         mImageViewSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle args = new Bundle();
-//        args.putInt(ARG_POST_ITEM_POS,pos);
-//        args.putParcelableArrayList(ARG_POST_ITEMS, (ArrayList<PostBean>) mPostBeansItems);
+                getAnalytics("search", "tags search", "search");
                 Intent intent = new Intent(MoebooruActivity.this, PostSearchActivity.class);
-//                intent.putExtras(args);
                 startActivity(intent);
             }
         });
+    }
+
+    private void getAnalytics(String id, String name, String type){
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, type);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     private void getSelectedTags(){
