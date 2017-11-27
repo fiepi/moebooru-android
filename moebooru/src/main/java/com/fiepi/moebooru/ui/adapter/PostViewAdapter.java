@@ -71,7 +71,7 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.PostVi
     public void onViewDetachedFromWindow(final PostViewAdapter.PostViewHolder holder) {
         GlideApp.with(holder.mImageViewPost.getContext())
                 .clear(holder.mImageViewPost);
-        Log.i(TAG, "Glide Clear");
+//        Log.i(TAG, "Glide Clear");
     }
 
     public void updateData(String type){

@@ -32,6 +32,7 @@ public class GetPost {
     private List<PostBean> mPostBeanList = new ArrayList<>();
     private Gson mGson = new Gson();
     private int mPage = 1;
+    private int mLimit = 40;
 
     private HttpLoggingInterceptor logInterceptor;
 
@@ -52,9 +53,9 @@ public class GetPost {
                 .build();
     }
 
-    public List<PostBean> getPosts(int limit, int page, String tags, String url){
+    public List<PostBean> getPosts( int page, String tags, String url){
         this.mPage = page;
-        this.mURL = url+"?page="+page+"&limit="+limit;
+        this.mURL = url+"?page="+page+"&limit="+mLimit;
         if (tags != "null"){
             mURL = mURL+"&tags="+tags;
         }

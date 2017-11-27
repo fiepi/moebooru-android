@@ -40,7 +40,6 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     private static final String ARG_POST_TYPE = "ARG_POST_TYPE";
 
     private Integer mPAGE = 1;
-    private Integer mLIMIT = 38;
     private String mTAGS = "null";
     private String mURL = "null";
 
@@ -174,7 +173,7 @@ public class PostFragment extends Fragment implements PostItemClickListener {
 
             Log.i(TAG, "url:" + mURL);
 
-            return new GetPost().getPosts(mLIMIT, page, mTAGS, mURL);
+            return new GetPost().getPosts(page, mTAGS, mURL);
         }
         @Override
         protected void onPreExecute() {

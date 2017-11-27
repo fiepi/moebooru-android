@@ -20,7 +20,6 @@ import com.fiepi.moebooru.util.AnalyticsUtils;
 import com.fiepi.moebooru.util.SharedPreferencesUtils;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +35,6 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
     private static final String ARG_POST_TYPE = "ARG_POST_TYPE";
 
     private Integer mPAGE = 1;
-    private Integer mLIMIT = 38;
     private String mTAGS = "null";
     private String mURL = "null";
 
@@ -169,7 +167,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
 
             Log.i(TAG, "url:" + mURL);
 
-            return new GetPost().getPosts(mLIMIT, page, mTAGS, mURL);
+            return new GetPost().getPosts(page, mTAGS, mURL);
         }
         @Override
         protected void onPreExecute() {
