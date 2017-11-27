@@ -35,7 +35,7 @@ public class TagDetailViewAdapter extends RecyclerView.Adapter<TagDetailViewAdap
     @Override
     public void onBindViewHolder(TagDetailViewHolder holder, int position) {
         holder.mTextViewTagDetail.setText(mTags.get(position).getName());
-        Log.i(TAG, mTags.get(position).getName());
+//        Log.i(TAG, mTags.get(position).getName());
     }
 
     @Override
@@ -52,6 +52,4 @@ public class TagDetailViewAdapter extends RecyclerView.Adapter<TagDetailViewAdap
             this.mTextViewTagDetail = (TextView) itemView.findViewById(R.id.tv_tag_detail);
         }
     }
-
-
 }

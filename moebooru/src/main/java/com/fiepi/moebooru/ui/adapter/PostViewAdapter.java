@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.fiepi.moebooru.AppConfig;
 import com.fiepi.moebooru.glide.GetGlideUrl;
 import com.fiepi.moebooru.glide.GlideApp;
 import com.fiepi.moebooru.R;
@@ -14,6 +15,7 @@ import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.listener.PostItemClickListener;
 import com.fiepi.moebooru.ui.widget.FixedImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,11 +23,10 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.PostVi
 
     private static final String TAG = PostViewAdapter.class.getSimpleName();
 
-    private List<PostBean> mPostBeanItems;
+    private List<PostBean> mPostBeanItems = new ArrayList<>();
     private PostItemClickListener mListener;
 
-    public PostViewAdapter(List<PostBean> items, PostItemClickListener listener) {
-        mPostBeanItems = items;
+    public PostViewAdapter(PostItemClickListener listener, String type) {
         mListener = listener;
     }
 
@@ -64,6 +65,24 @@ public class PostViewAdapter extends RecyclerView.Adapter<PostViewAdapter.PostVi
     @Override
     public int getItemCount() {
         return mPostBeanItems == null ? 0 : mPostBeanItems.size();
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(final PostViewAdapter.PostViewHolder holder) {
+        GlideApp.with(holder.mImageViewPost.getContext())
+                .clear(holder.mImageViewPost);
+        Log.i(TAG, "Glide Clear");
+    }
+
+    public void updateData(String type){
+        if (type == "post"){
+            this.mPostBeanItems = AppConfig.mPostBeanPostItems;
+            notifyDataSetChanged();
+        }
+        if (type == "search"){
+            this.mPostBeanItems = AppConfig.mPostBeanSearchItems;
+            notifyDataSetChanged();
+        }
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder {

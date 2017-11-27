@@ -1,5 +1,10 @@
 package com.fiepi.moebooru;
 
+import com.fiepi.moebooru.bean.PostBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by fiepi on 11/24/17.
  */
@@ -14,4 +19,7 @@ public class AppConfig {
     public static final String booruDomainKey = "booru_domain";
 
     public static final String tagPref = "tag_search";
+
+    public static List<PostBean> mPostBeanPostItems = new ArrayList<>();
+    public static  List<PostBean> mPostBeanSearchItems = new ArrayList<>();
 }

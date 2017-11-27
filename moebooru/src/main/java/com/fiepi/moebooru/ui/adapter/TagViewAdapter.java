@@ -97,6 +97,7 @@ public class TagViewAdapter extends RecyclerView.Adapter<TagViewAdapter.TagViewH
         return mTagsName.size();
     }
 
+
     private void getTags(){
         mTagsMap = new SharedPreferencesUtils().getALL(nameTagPref);
         mTagsName = new ArrayList<String>(mTagsMap.keySet());

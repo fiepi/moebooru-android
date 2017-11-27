@@ -31,6 +31,7 @@ public class GetPost {
     private List<RawPostBean> mRawPostBeanList = new ArrayList<>();
     private List<PostBean> mPostBeanList = new ArrayList<>();
     private Gson mGson = new Gson();
+    private int mPage = 1;
 
     private HttpLoggingInterceptor logInterceptor;
 
@@ -52,6 +53,7 @@ public class GetPost {
     }
 
     public List<PostBean> getPosts(int limit, int page, String tags, String url){
+        this.mPage = page;
         this.mURL = url+"?page="+page+"&limit="+limit;
         if (tags != "null"){
             mURL = mURL+"&tags="+tags;
@@ -152,7 +154,10 @@ public class GetPost {
         String string = jsonArray.toString();
         if (!jsonArray.isJsonNull()){
             //保存 json 供下次打开时读取缓存中的图片
-            new FileUtils().saveJson(string);
+            //只在刷新时保存
+            if (mPage == 1){
+                new FileUtils().saveJson(string);
+            }
             //转换为 List<RawPostBean>
             for (JsonElement post : jsonArray){
                 RawPostBean rawPostBean = mGson.fromJson(post, RawPostBean.class);

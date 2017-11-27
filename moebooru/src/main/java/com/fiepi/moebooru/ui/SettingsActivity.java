@@ -1,12 +1,13 @@
 package com.fiepi.moebooru.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.preference.Preference;
 
 import android.support.v7.app.ActionBar;
 
-public class SettingsActivity extends AppCompatPreferenceActivity {
+public class SettingsActivity extends AppCompatPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener{
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
@@ -32,5 +33,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object o) {
+        return false;
     }
 }

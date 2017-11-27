@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fiepi.moebooru.AppConfig;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.api.GetPost;
 import com.fiepi.moebooru.bean.PostBean;
@@ -36,8 +37,7 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     private int mColumnCount = 1;
 
     private static final String ARG_POST_ITEM_POS = "ARG_POST_ITEM_POS";
-    private static final String ARG_POST_ITEMS = "ARG_POST_ITEMS";
-    private static final String ARG_POST_ITEM = "ARG_POST_ITEM";
+    private static final String ARG_POST_TYPE = "ARG_POST_TYPE";
 
     private Integer mPAGE = 1;
     private Integer mLIMIT = 38;
@@ -50,7 +50,6 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     private PostItemClickListener mListener = this;
     private PostViewAdapter mAdapter;
     private PullPost mPullPostTask = null;
-    private List<PostBean> mPostBeansItems = new ArrayList<>();
 
     public PostFragment() {
     }
@@ -70,7 +69,6 @@ public class PostFragment extends Fragment implements PostItemClickListener {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
-
         String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
         String booruType = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey);
         if (domain != "null"){
@@ -92,9 +90,8 @@ public class PostFragment extends Fragment implements PostItemClickListener {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        mAdapter = new PostViewAdapter(mPostBeansItems, mListener);
+        mAdapter = new PostViewAdapter(mListener, "post");
         mRecyclerView.setAdapter(mAdapter);
-
         return rootView;
     }
 
@@ -146,7 +143,7 @@ public class PostFragment extends Fragment implements PostItemClickListener {
     public void onPostItemClick(int pos) {
         Bundle args = new Bundle();
         args.putInt(ARG_POST_ITEM_POS,pos);
-        args.putParcelableArrayList(ARG_POST_ITEMS, (ArrayList<PostBean>) mPostBeansItems);
+        args.putString(ARG_POST_TYPE, "post");
         Intent intent = new Intent(getContext(), PostDetailActivity.class);
         intent.putExtras(args);
         startActivity(intent);
@@ -198,15 +195,15 @@ public class PostFragment extends Fragment implements PostItemClickListener {
             }
             if (status == 0){
                 if (postBeans != null){
-                    if (!mPostBeansItems.isEmpty()){
+                    if (!mPostBeanPostItems.isEmpty()){
 //                        Log.i(TAG,"刷新成功");
-                        if (postBeans.get(0).getId() > mPostBeansItems.get(0).getId()){
+                        if (postBeans.get(0).getId() > mPostBeanPostItems.get(0).getId()){
                             Log.i(TAG,"有新数据");
-                            mPostBeansItems.clear();
-//                            Log.i(TAG,"清理后 mPostBeansItems 的大小: " + mPostBeansItems.size());
+                            mPostBeanPostItems.clear();
+//                            Log.i(TAG,"清理后 mPostBeanPostItems 的大小: " + mPostBeanPostItems.size());
                             for (int i = 0; i < postBeans.size(); i++){
-                                mPostBeansItems.add(postBeans.get(i));
-                                mAdapter.notifyDataSetChanged();
+                                mPostBeanPostItems.add(postBeans.get(i));
+                                mAdapter.updateData("post");
                             }
 //                            Log.i(TAG,"mAdapter.getItemCount(): "+mAdapter.getItemCount());
                             mPAGE = 1;
@@ -214,8 +211,8 @@ public class PostFragment extends Fragment implements PostItemClickListener {
                     }else {
                         //逐条更新
                         for (int i = 0; i < postBeans.size(); i++){
-                            mPostBeansItems.add(postBeans.get(i));
-                            mAdapter.notifyDataSetChanged();
+                            mPostBeanPostItems.add(postBeans.get(i));
+                            mAdapter.updateData("post");
                         }
                     }
                 }else {
@@ -225,8 +222,8 @@ public class PostFragment extends Fragment implements PostItemClickListener {
                 if (postBeans != null){
 //                    Log.i(TAG,"正在加载的页数："+ page +" 接收数据大小：" + postBeans.size() + " 原有大小：" + mPostBeansItems.size());
                     for (int i = 0; i < postBeans.size(); i++){
-                        mPostBeansItems.add(postBeans.get(i));
-                        mAdapter.notifyDataSetChanged();
+                        mPostBeanPostItems.add(postBeans.get(i));
+                        mAdapter.updateData("post");
                     }
                 }else {
                     Log.i(TAG,"结果为空");
@@ -239,10 +236,9 @@ public class PostFragment extends Fragment implements PostItemClickListener {
         File file = new FileUtils().getFile();
         if (file.exists()){
             try {
-                mPostBeansItems = new FileUtils().getPostBeanFromFile();
-                if (!mPostBeansItems.isEmpty()){
-                    mAdapter = new PostViewAdapter(mPostBeansItems, mListener);
-                    mRecyclerView.setAdapter(mAdapter);
+                mPostBeanPostItems = new FileUtils().getPostBeanFromFile();
+                if (!mPostBeanPostItems.isEmpty()){
+                    mAdapter.updateData("post");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

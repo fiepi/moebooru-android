@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.fiepi.moebooru.AppConfig;
 import com.fiepi.moebooru.glide.GetGlideUrl;
 import com.fiepi.moebooru.glide.GlideApp;
 import com.fiepi.moebooru.R;
@@ -43,19 +45,17 @@ public class PostDetailFragment extends Fragment {
 
     private static final String TAG = PostDetailFragment.class.getSimpleName();
 
-    private static final String POST = "POST";
+    private static final String POS = "POS";
+    private static final String TYPE = "TYPE";
 
     private PhotoView mPhotoView;
-//    private Toolbar mToolbar;
     private ProgressBar mProgressBar;
     private PostBean mPostBean;
-    private SlidingUpPanelLayout mSlidingUpPanelLayout;
     private RecyclerView.LayoutManager mTagDetailLayoutManager;
     private RecyclerView mRecyclerView;
     private TagDetailViewAdapter mTagAdapter;
+    private SlidingUpPanelLayout mSlidingUpPanelLayout;
 
-    private TextView mTextViewInfoID;
-    private TextView mTextViewInfoSize;
     private TextView mTextViewInfoAuthor;
     private TextView mTextViewInfoCreator;
     private TextView mTextViewInfoCreatedAt;
@@ -69,10 +69,11 @@ public class PostDetailFragment extends Fragment {
 
     }
 
-    public static PostDetailFragment newInstance(PostBean postBean) {
+    public static PostDetailFragment newInstance(int pos, String type) {
         PostDetailFragment fragment = new PostDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable(POST, postBean);
+        args.putInt(POS, pos);
+        args.putString(TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,8 +83,19 @@ public class PostDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //开启菜单
         setHasOptionsMenu(true);
+
         if (getArguments() != null) {
-            mPostBean = getArguments().getParcelable(POST);
+            String type = getArguments().getString(TYPE);
+//            Log.i(TAG,type + ":" + getArguments().getInt(POS));
+            if (type.equals("post")){
+                mPostBean = AppConfig.mPostBeanPostItems.get(getArguments().getInt(POS));
+//                Log.i(TAG, "post");
+            }
+            if (type.equals("search"))
+                {
+                mPostBean = AppConfig.mPostBeanSearchItems.get(getArguments().getInt(POS));
+//                Log.i(TAG, "search");
+            }
         }
     }
 

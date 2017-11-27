@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,23 +23,26 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private static final String TAG = PostDetailActivity.class.getSimpleName();
     private static final String ARG_POST_ITEM_POS = "ARG_POST_ITEM_POS";
-    private static final String ARG_POST_ITEMS = "ARG_POST_ITEMS";
+    private static final String ARG_POST_TYPE = "ARG_POST_TYPE";
 
-    private List<PostBean> mPostBeanItems;
     private int mPOS;
     private PostPagerAdapter mAdapter;
     private ViewPager mViewPager;
+
+    private String mType = "post";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
+
         mViewPager = (ViewPager) findViewById(R.id.vp_post);
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         mPOS = bundle.getInt(ARG_POST_ITEM_POS);
-        mPostBeanItems = bundle.getParcelableArrayList(ARG_POST_ITEMS);
-        mAdapter = new PostPagerAdapter(getSupportFragmentManager(), mPostBeanItems);
+        mType = bundle.getString(ARG_POST_TYPE);
+        mAdapter = new PostPagerAdapter(getSupportFragmentManager(), mType);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mPOS);
     }

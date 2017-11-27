@@ -33,8 +33,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
     private static final int SPAN_COUNT = 3;
 
     private static final String ARG_POST_ITEM_POS = "ARG_POST_ITEM_POS";
-    private static final String ARG_POST_ITEMS = "ARG_POST_ITEMS";
-    private static final String ARG_POST_ITEM = "ARG_POST_ITEM";
+    private static final String ARG_POST_TYPE = "ARG_POST_TYPE";
 
     private Integer mPAGE = 1;
     private Integer mLIMIT = 38;
@@ -46,7 +45,6 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private PostItemClickListener mListener = this;
     private PostViewAdapter mAdapter;
-    private List<PostBean> mPostBeansItems = new ArrayList<>();
 
     private PullPost mPullPostTask = null;
 
@@ -66,7 +64,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        mAdapter = new PostViewAdapter(mPostBeansItems, mListener);
+        mAdapter = new PostViewAdapter(mListener, "search");
         mRecyclerView.setAdapter(mAdapter);
 
         mTAGS = getSelectedTags();
@@ -85,8 +83,8 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
     @Override
     public void onPostItemClick(int pos) {
         Bundle args = new Bundle();
-        args.putInt(ARG_POST_ITEM_POS,pos);
-        args.putParcelableArrayList(ARG_POST_ITEMS, (ArrayList<PostBean>) mPostBeansItems);
+        args.putInt(ARG_POST_ITEM_POS, pos);
+        args.putString(ARG_POST_TYPE, "search");
         Intent intent = new Intent(this, PostDetailActivity.class);
         intent.putExtras(args);
         startActivity(intent);
@@ -192,15 +190,15 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
             }
             if (status == 0){
                 if (postBeans != null){
-                    if (!mPostBeansItems.isEmpty()){
+                    if (!mPostBeanSearchItems.isEmpty()){
 //                        Log.i(TAG,"刷新成功");
-                        if (postBeans.get(0).getId() > mPostBeansItems.get(0).getId()){
+                        if (postBeans.get(0).getId() > mPostBeanSearchItems.get(0).getId()){
                             Log.i(TAG,"有新数据");
-                            mPostBeansItems.clear();
-//                            Log.i(TAG,"清理后 mPostBeansItems 的大小: " + mPostBeansItems.size());
+                            mPostBeanSearchItems.clear();
+//                            Log.i(TAG,"清理后 mPostBeanSearchItems 的大小: " + mPostBeanSearchItems.size());
                             for (int i = 0; i < postBeans.size(); i++){
-                                mPostBeansItems.add(postBeans.get(i));
-                                mAdapter.notifyDataSetChanged();
+                                mPostBeanSearchItems.add(postBeans.get(i));
+                                mAdapter.updateData("search");
                             }
 //                            Log.i(TAG,"mAdapter.getItemCount(): "+mAdapter.getItemCount());
                             mPAGE = 1;
@@ -208,8 +206,8 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
                     }else {
                         //逐条更新
                         for (int i = 0; i < postBeans.size(); i++){
-                            mPostBeansItems.add(postBeans.get(i));
-                            mAdapter.notifyDataSetChanged();
+                            mPostBeanSearchItems.add(postBeans.get(i));
+                            mAdapter.updateData("search");
                         }
                     }
                 }else {
@@ -217,10 +215,10 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
                 }
             }else if (status == 1){
                 if (postBeans != null){
-//                    Log.i(TAG,"正在加载的页数："+ page +" 接收数据大小：" + postBeans.size() + " 原有大小：" + mPostBeansItems.size());
+//                    Log.i(TAG,"正在加载的页数："+ page +" 接收数据大小：" + postBeans.size() + " 原有大小：" + mPostBeanSearchItems.size());
                     for (int i = 0; i < postBeans.size(); i++){
-                        mPostBeansItems.add(postBeans.get(i));
-                        mAdapter.notifyDataSetChanged();
+                        mPostBeanSearchItems.add(postBeans.get(i));
+                        mAdapter.updateData("search");
                     }
                 }else {
                     Log.i(TAG,"结果为空");

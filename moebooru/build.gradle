@@ -61,6 +61,7 @@ android {
 ext {
     supportLibVersion = '26.1.0'
     glideVersion = '4.3.1'
+    rikkaPreferenceVersion = '2.2.2'
 }
 
 dependencies {
@@ -85,6 +86,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.bm.photoview:library:1.4.1'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
+
+    implementation "moe.shizuku.preference:preference:${rikkaPreferenceVersion}"
+    implementation "moe.shizuku.preference:preference-dialog-android:${rikkaPreferenceVersion}"
 
 }
 apply plugin: 'com.google.gms.google-services'
