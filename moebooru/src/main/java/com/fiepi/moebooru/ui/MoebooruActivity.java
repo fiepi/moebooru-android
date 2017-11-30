@@ -1,7 +1,6 @@
 package com.fiepi.moebooru.ui;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -33,8 +32,8 @@ import android.widget.Toast;
 
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.ui.adapter.TagViewAdapter;
+import com.fiepi.moebooru.ui.settings.SettingsFragment;
 import com.fiepi.moebooru.util.SharedPreferencesUtils;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,17 +53,20 @@ public class MoebooruActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mTagLayoutManager;
     private NavBooruFragment mNavBooruFragment = new NavBooruFragment();
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moebooru);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("Post");
+        setSupportActionBar(mToolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -114,18 +116,18 @@ public class MoebooruActivity extends AppCompatActivity
         //init nav header
         TextView textViewName = headerView.findViewById(R.id.tv_nav_header_name);
         TextView textViewUrl = headerView.findViewById(R.id.tv_nav_header_url);
-        textViewName.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruNameKey));
-        textViewUrl.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey)
-                + new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey));
+        textViewName.setText(new SharedPreferencesUtils().getStringValue(booruUsedPref, booruNameKey));
+        textViewUrl.setText(new SharedPreferencesUtils().getStringValue(booruUsedPref, booruTypeKey)
+                + new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey));
 
         ImageView imageViewLogo = headerView.findViewById(R.id.iv_logo);
         imageViewLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initBooruDialog();
-                textViewName.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruNameKey));
-                textViewUrl.setText(new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey)
-                        + new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey));
+                textViewName.setText(new SharedPreferencesUtils().getStringValue(booruUsedPref, booruNameKey));
+                textViewUrl.setText(new SharedPreferencesUtils().getStringValue(booruUsedPref, booruTypeKey)
+                        + new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey));
             }
         });
 
@@ -206,7 +208,7 @@ public class MoebooruActivity extends AppCompatActivity
                         name = name.replaceAll("\\s*", "");
                         String domain = editTextDomain.getText().toString();
                         domain = domain.replaceAll("\\s*", "");
-                        String type = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey);
+                        String type = new SharedPreferencesUtils().getStringValue(booruUsedPref, booruTypeKey);
                         if (!name.isEmpty() || !domain.isEmpty()){
                             if (type == "null"){
                                 SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
@@ -242,7 +244,7 @@ public class MoebooruActivity extends AppCompatActivity
     }
 
     private Boolean booruIsExist(){
-        if (new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey) == "null"){
+        if (new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey) == "null"){
             return false;
         }
         return true;
@@ -322,6 +324,7 @@ public class MoebooruActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.frag_moebooru, fragment)
                     .commit();
+            mToolbar.setTitle("Post");
 
         } else if (id == R.id.nav_booru) {
             Fragment fragment = new BooruFragment();
@@ -329,9 +332,14 @@ public class MoebooruActivity extends AppCompatActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.frag_moebooru, fragment)
                     .commit();
+            mToolbar.setTitle("Boorus");
         } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            SettingsFragment fragment = new SettingsFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frag_moebooru, fragment)
+                    .commit();
+            mToolbar.setTitle("Settings");
 
         } else if (id == R.id.nav_about) {
             Uri uri = Uri.parse("https://github.com/fiepi/moebooru-android");

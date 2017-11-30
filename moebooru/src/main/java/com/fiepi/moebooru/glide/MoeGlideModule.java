@@ -10,7 +10,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
-
+import com.fiepi.moebooru.AppConfig;
+import com.fiepi.moebooru.util.SharedPreferencesUtils;
 
 /**
  * Created by fiepi on 11/22/17.
@@ -18,6 +19,11 @@ import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 
 @GlideModule
 public final class MoeGlideModule extends AppGlideModule {
+    private static final String TAG = MoeGlideModule.class.getSimpleName();
+
+    private static final String mPref = "settings";
+    private static final String mCacheMemory = "cache_memory";
+    private static final String mCacheDisk = "cache_disk";
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
@@ -26,9 +32,18 @@ public final class MoeGlideModule extends AppGlideModule {
                 .build();
         // default
 //        builder.setMemoryCache(new LruResourceCache(calculator.getMemoryCacheSize()));
-        int memoryCacheSizeBytes = 1024 * 1024 * 512;
+        Integer m = new SharedPreferencesUtils().getIntValue(mPref, mCacheMemory);
+        if (m == 0){
+            m = 256;
+        }
+        int memoryCacheSizeBytes = 1024 * 1024 * m;
         builder.setMemoryCache(new LruResourceCache(memoryCacheSizeBytes));
-        int diskCacheSizeBytes = 1024 * 1024 * 512; // 512 MB
+
+        Integer d = new SharedPreferencesUtils().getIntValue(mPref, mCacheDisk);
+        if (d == 0){
+            d = 256;
+        }
+        int diskCacheSizeBytes = 1024 * 1024 * d;
         builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskCacheSizeBytes));
         builder.setDefaultRequestOptions(
                 new RequestOptions()

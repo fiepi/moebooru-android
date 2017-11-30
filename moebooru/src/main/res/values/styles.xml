@@ -21,6 +21,9 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <!--使状态栏，导航栏可绘制-->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="preferenceTheme">@style/PreferenceTheme</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="DetailTheme" parent="@style/MoeTheme">
@@ -49,7 +52,6 @@
         <item name="android:actionMenuTextColor">@android:color/white</item>
         <item name="android:colorBackground">@color/colorPrimaryDark</item>
         <item name="android:textColor">@android:color/white</item>
-
     </style>
 
     <style name="AppThemeNoActionBar">
@@ -69,4 +71,20 @@
         <item name="overlapAnchor">false</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
     </style>
 
+    <style name="PreferenceTheme" parent="PreferenceThemeOverlay">
+        <!-- Only need this on pre-Lollipop -->
+        <item name="accentColorCompat">?colorAccent</item>
+        <item name="backgroundCompat">?selectableItemBackground</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="simpleMenuPreferenceStyle">@style/Preference.SimpleMenuPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
+    </style>
+    <style name="SimpleMenuPreference" parent="Preference.SimpleMenuPreference">
+        <item name="popupStyle">@style/SimpleMenuPreference.Popup</item>
+    </style>
+
+    <style name="SimpleMenuPreference.Popup" parent="Preference.SimpleMenuPreference.Popup">
+        <item name="listElevation">40dp</item>
+    </style>
 </resources>

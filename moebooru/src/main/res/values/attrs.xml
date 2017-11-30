@@ -4,4 +4,8 @@
         <attr name="widthWeight" format="integer"/>
         <attr name="heightWeight" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="NumberPickerPreference">
+        <attr name="min" format="integer"/>
+        <attr name="max" format="integer"/>
+    </declare-styleable>
 </resources>

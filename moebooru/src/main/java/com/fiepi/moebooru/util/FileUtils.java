@@ -105,7 +105,7 @@ public class FileUtils {
 
     private String getFileName(){
         SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
-        String domain = sharedPreferencesUtils.getStringValus(booruUsedPref, booruDomainKey);
+        String domain = sharedPreferencesUtils.getStringValue(booruUsedPref, booruDomainKey);
         if (domain != "null"){
             mFileName = domain+"_post.json";
         }

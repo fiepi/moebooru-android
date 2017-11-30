@@ -27,12 +27,7 @@
             android:theme="@style/DetailTheme">
 
         </activity>
-        <activity
-            android:name=".ui.SettingsActivity"
-            android:label="@string/title_activity_settings" />
-        <activity android:name=".ui.PostSearchActivity">
 
-        </activity>
     </application>
 
 </manifest>

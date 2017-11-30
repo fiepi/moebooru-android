@@ -89,6 +89,8 @@ dependencies {
 
     implementation "moe.shizuku.preference:preference:${rikkaPreferenceVersion}"
     implementation "moe.shizuku.preference:preference-dialog-android:${rikkaPreferenceVersion}"
+    implementation "moe.shizuku.preference:preference-simplemenu:${rikkaPreferenceVersion}"
+    implementation "moe.shizuku.preference:preference-switchcompat:${rikkaPreferenceVersion}"
 
     implementation ('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true

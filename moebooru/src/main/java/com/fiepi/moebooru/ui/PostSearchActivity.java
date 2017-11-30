@@ -158,8 +158,8 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
             if (isCancelled()){
                 return null;
             }
-            String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
-            String booruType = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey);
+            String domain = new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey);
+            String booruType = new SharedPreferencesUtils().getStringValue(booruUsedPref, booruTypeKey);
             if (domain == "null"){
                 cancel(true);
             }

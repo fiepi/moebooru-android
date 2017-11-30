@@ -12,20 +12,15 @@
             android:id="@+id/nav_booru"
             android:icon="@drawable/ic_action_boorus"
             android:title="Boorus" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_action_settings"
+            android:title="Settings" />
     </group>
 
     <item
-        android:title="More">
-        <menu>
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_action_settings"
-                android:title="Settings" />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_action_about"
-                android:title="About" />
-        </menu>
-    </item>
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_action_about"
+        android:title="About" />
 
 </menu>

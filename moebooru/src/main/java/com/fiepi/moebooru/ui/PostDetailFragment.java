@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.fiepi.moebooru.AppConfig;
@@ -129,6 +130,7 @@ public class PostDetailFragment extends Fragment {
         GlideApp.with(getContext())
                 .load(new GetGlideUrl().makeGlideUrl(mPostBean.getSample_url()))
                 .fitCenter()
+                .transition(new DrawableTransitionOptions().crossFade(400))
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,
@@ -176,7 +178,7 @@ public class PostDetailFragment extends Fragment {
         mImageViewDL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
+                String domain = new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey);
                 if (domain != "null"){
                     new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), domain, getActivity()).toDownload();
                 }
@@ -219,12 +221,12 @@ public class PostDetailFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_download_post) {
-            String domain = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
+            String domain = new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey);
             new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(), domain, getActivity()).toDownload();
             return true;
         }else if (id == R.id.action_share_post){
-            String site = new SharedPreferencesUtils().getStringValus(booruUsedPref, booruTypeKey)
-                    + new SharedPreferencesUtils().getStringValus(booruUsedPref, booruDomainKey);
+            String site = new SharedPreferencesUtils().getStringValue(booruUsedPref, booruTypeKey)
+                    + new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey);
             String url = site + "/post/show/" + mPostBean.getId();
             new ShareUtils().shareText(url, getActivity());
         }

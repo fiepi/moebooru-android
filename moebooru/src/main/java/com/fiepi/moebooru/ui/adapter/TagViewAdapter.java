@@ -79,7 +79,7 @@ public class TagViewAdapter extends RecyclerView.Adapter<TagViewAdapter.TagViewH
                                 Toast.makeText(mContext, mTagsName.get(position) + " has been copied.", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.menu_remove:
-                                new SharedPreferencesUtils().removeValus(nameTagPref, mTagsName.get(position));
+                                new SharedPreferencesUtils().removeValue(nameTagPref, mTagsName.get(position));
                                 getTags();
                                 notifyDataSetChanged();
                                 break;

@@ -35,7 +35,7 @@ public class SharedPreferencesUtils {
         editor.commit();
     }
 
-    public String getStringValus(String namePref, String key){
+    public String getStringValue(String namePref, String key){
         Context appContext = new FileUtils().getContext();
         SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
         String string = "null";
@@ -44,13 +44,21 @@ public class SharedPreferencesUtils {
         return string;
     }
 
+    public Integer getIntValue(String namePref, String key){
+        Context appContext = new FileUtils().getContext();
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
+        Integer vulue = Integer.valueOf(sharedPreferences.getString(key, "0"));
+        Log.i(TAG, "取 int："+vulue);
+        return vulue;
+    }
+
     public Map<String,?> getALL(String namePref){
         Context appContext = new FileUtils().getContext();
         SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
         return sharedPreferences.getAll();
     }
 
-    public void removeValus(String namePref, String nameKey){
+    public void removeValue(String namePref, String nameKey){
         Context appContext = new FileUtils().getContext();
         SharedPreferences sharedPreferences = appContext.getSharedPreferences(namePref, appContext.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

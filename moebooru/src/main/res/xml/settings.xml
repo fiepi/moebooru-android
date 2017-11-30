@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Post">
+        <ListPreference
+            android:key="limit"
+            android:title="Post limit"
+            android:summary="%s"
+            android:entries="@array/entries_limit"
+            android:entryValues="@array/entries_limit"
+            android:defaultValue="30"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Cache">
+
+        <ListPreference
+            android:key="cache_memory"
+            android:title="Memory cache"
+            android:summary="%s"
+            android:entries="@array/entries_cache"
+            android:entryValues="@array/entries_cache_values"
+            android:defaultValue="256"/>
+        
+        <ListPreference
+            android:key="cache_disk"
+            android:title="Disk cache"
+            android:summary="%s"
+            android:entries="@array/entries_cache"
+            android:entryValues="@array/entries_cache_values"
+            android:defaultValue="256"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

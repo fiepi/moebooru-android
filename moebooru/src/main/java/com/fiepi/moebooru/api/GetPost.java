@@ -6,6 +6,7 @@ import com.fiepi.moebooru.AppConfig;
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.bean.TagBean;
 import com.fiepi.moebooru.util.FileUtils;
+import com.fiepi.moebooru.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -39,6 +40,10 @@ public class GetPost {
     private OkHttpClient mClient;
 
     public GetPost(){
+        Integer i = new SharedPreferencesUtils().getIntValue("settings", "limit");
+        if (i != 0){
+            this.mLimit = i;
+        }
         logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -55,7 +60,7 @@ public class GetPost {
 
     public List<PostBean> getPosts( int page, String tags, String url){
         this.mPage = page;
-        this.mURL = url+"?page="+page+"&limit="+mLimit;
+        this.mURL = url+"?page="+page+"&limit="+this.mLimit;
         if (tags != "null"){
             mURL = mURL+"&tags="+tags;
         }
