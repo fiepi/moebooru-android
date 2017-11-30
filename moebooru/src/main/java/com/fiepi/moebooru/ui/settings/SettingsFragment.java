@@ -31,16 +31,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         setPreferencesFromResource(R.xml.settings, null);
 
-        PreferenceCategory preferenceCategory = new PreferenceCategory(getContext());
-        preferenceCategory.setTitle("Test add dynamically");
-        getPreferenceScreen().addPreference(preferenceCategory);
-
-        CheckBoxPreference checkBoxPreference = new CheckBoxPreference(getContext());
-        checkBoxPreference.setTitle("Test");
-        checkBoxPreference.setSummaryOn("ON");
-        checkBoxPreference.setSummaryOff("OFF");
-        getPreferenceScreen().addPreference(checkBoxPreference);
-
     }
 
     @Override

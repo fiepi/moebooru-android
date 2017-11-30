@@ -15,7 +15,7 @@ android {
         applicationId 'com.fiepi.moebooru'
         minSdkVersion 23
         targetSdkVersion 26
-        versionCode 8
+        versionCode 10
         versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config_release
@@ -38,7 +38,7 @@ android {
             minSdkVersion 23
             applicationId 'com.fiepi.moebooru'
             targetSdkVersion 26
-            versionCode 8
+            versionCode 10
             versionName VERSION_NAME
             signingConfig signingConfigs.config_release
         }
@@ -48,7 +48,7 @@ android {
             minSdkVersion 23
             applicationId 'com.fiepi.moebooru.debug'
             targetSdkVersion 26
-            versionCode 8
+            versionCode 10
             versionName VERSION_NAME
             signingConfig signingConfigs.config_release
         }

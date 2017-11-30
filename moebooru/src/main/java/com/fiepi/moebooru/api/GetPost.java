@@ -29,14 +29,14 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class GetPost {
     private static final String TAG = GetPost.class.getSimpleName();
     private String mURL = null;
+    private String mRating = "all";
     private List<RawPostBean> mRawPostBeanList = new ArrayList<>();
     private List<PostBean> mPostBeanList = new ArrayList<>();
     private Gson mGson = new Gson();
-    private int mPage = 1;
     private int mLimit = 40;
+    private int mPage = 1;
 
     private HttpLoggingInterceptor logInterceptor;
-
     private OkHttpClient mClient;
 
     public GetPost(){
@@ -44,6 +44,7 @@ public class GetPost {
         if (i != 0){
             this.mLimit = i;
         }
+        mRating = new SharedPreferencesUtils().getStringValue("settings", "rating");
         logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -60,10 +61,20 @@ public class GetPost {
 
     public List<PostBean> getPosts( int page, String tags, String url){
         this.mPage = page;
-        this.mURL = url+"?page="+page+"&limit="+this.mLimit;
-        if (tags != "null"){
-            mURL = mURL+"&tags="+tags;
+        if (tags.equals("null")){
+            if (!(mRating.equals("all")||mRating.equals("null"))){
+                this.mURL = url + "?page=" + page + "&limit=" + this.mLimit + "&tags=rating:" + mRating;
+            }else {
+                this.mURL = url + "?page=" + page + "&limit=" + this.mLimit;
+            }
+        }else {
+            if (!(mRating.equals("all")||mRating.equals("null"))){
+                this.mURL = url + "?page=" + page + "&limit=" + this.mLimit + "&tags=rating:" + mRating + "+" + tags;
+            }else {
+                this.mURL = url + "?page=" + page + "&limit=" + this.mLimit + "&tags=" + tags;
+            }
         }
+        Log.i(TAG, mURL);
         mPostBeanList = getPostBean(getRawPostBean(sendRequest()));
         if (mPostBeanList == null){
             Log.i(TAG,"mPostBeanList 结果为空");
@@ -161,7 +172,7 @@ public class GetPost {
         if (!jsonArray.isJsonNull()){
             //保存 json 供下次打开时读取缓存中的图片
             //只在刷新时保存
-            if (mPage == 1){
+            if (this.mPage == 1){
                 new FileUtils().saveJson(string);
             }
             //转换为 List<RawPostBean>

@@ -188,26 +188,12 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
             }
             if (status == 0){
                 if (postBeans != null){
-                    if (!mPostBeanSearchItems.isEmpty()){
-//                        Log.i(TAG,"刷新成功");
-                        if (postBeans.get(0).getId() > mPostBeanSearchItems.get(0).getId()){
-                            Log.i(TAG,"有新数据");
-                            mPostBeanSearchItems.clear();
-//                            Log.i(TAG,"清理后 mPostBeanSearchItems 的大小: " + mPostBeanSearchItems.size());
-                            for (int i = 0; i < postBeans.size(); i++){
-                                mPostBeanSearchItems.add(postBeans.get(i));
-                                mAdapter.updateData("search");
-                            }
-//                            Log.i(TAG,"mAdapter.getItemCount(): "+mAdapter.getItemCount());
-                            mPAGE = 1;
-                        }
-                    }else {
-                        //逐条更新
-                        for (int i = 0; i < postBeans.size(); i++){
-                            mPostBeanSearchItems.add(postBeans.get(i));
-                            mAdapter.updateData("search");
-                        }
+                    mPostBeanPostItems.clear();
+                    for (int i = 0; i < postBeans.size(); i++){
+                        mPostBeanPostItems.add(postBeans.get(i));
+                        mAdapter.updateData("post");
                     }
+                    mPAGE = 1;
                 }else {
                     Log.i(TAG,"结果为空");
                 }

@@ -40,6 +40,24 @@
         <item>2048</item>
     </string-array>
 
+    <string-array name="entries_rating">
+        <item>All</item>
+        <item>Safe only</item>
+        <item>Questionable only (Ecchi)</item>
+        <item>Explicit only (Hentai)</item>
+        <item>Questionable &amp; Explicit</item>
+        <item>Questionable &amp; Safe</item>
+    </string-array>
+
+    <string-array name="entries_rating_values">
+        <item>all</item>
+        <item>safe</item>
+        <item>questionable</item>
+        <item>explicit</item>
+        <item>questionableplus</item>
+        <item>questionableless</item>
+    </string-array>
+
     <string name="on_preference_change_toast_message">onPreferenceChange: key = %1$s, newValue = %2$s</string>
 
 

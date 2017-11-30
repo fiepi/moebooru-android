@@ -4,6 +4,15 @@
 
     <PreferenceCategory
         android:title="Post">
+
+        <ListPreference
+            android:key="rating"
+            android:title="Rating"
+            android:summary="%s"
+            android:entries="@array/entries_rating"
+            android:entryValues="@array/entries_rating_values"
+            android:defaultValue="safe"/>
+
         <ListPreference
             android:key="limit"
             android:title="Post limit"
