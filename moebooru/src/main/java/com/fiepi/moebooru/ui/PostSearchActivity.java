@@ -72,6 +72,7 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search);
         toolbar.setSubtitle(mTAGS);
 
+        mSwipeRefreshLayout.setRefreshing(true);
         new PullPost(0, mPAGE).execute();
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -188,10 +189,10 @@ public class PostSearchActivity extends AppCompatActivity implements PostItemCli
             }
             if (status == 0){
                 if (postBeans != null){
-                    mPostBeanPostItems.clear();
+                    mPostBeanSearchItems.clear();
                     for (int i = 0; i < postBeans.size(); i++){
-                        mPostBeanPostItems.add(postBeans.get(i));
-                        mAdapter.updateData("post");
+                        mPostBeanSearchItems.add(postBeans.get(i));
+                        mAdapter.updateData("search");
                     }
                     mPAGE = 1;
                 }else {

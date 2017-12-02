@@ -19,6 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
 -dontwarn javax.annotation.**
 -dontwarn okio.**
 
@@ -28,3 +29,6 @@
     **[] $VALUES;
     public *;
 }
+
+-keep public class com.fiepi.moebooru.util.FileUtils.** {*;}
+-keep public class com.fiepi.moebooru.api.** {*;}

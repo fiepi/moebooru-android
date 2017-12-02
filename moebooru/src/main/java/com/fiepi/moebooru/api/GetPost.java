@@ -13,6 +13,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +36,7 @@ public class GetPost {
     private Gson mGson = new Gson();
     private int mLimit = 40;
     private int mPage = 1;
+    private String mType = "";
 
     private HttpLoggingInterceptor logInterceptor;
     private OkHttpClient mClient;
@@ -62,12 +64,14 @@ public class GetPost {
     public List<PostBean> getPosts( int page, String tags, String url){
         this.mPage = page;
         if (tags.equals("null")){
+            mType = "post";
             if (!(mRating.equals("all")||mRating.equals("null"))){
                 this.mURL = url + "?page=" + page + "&limit=" + this.mLimit + "&tags=rating:" + mRating;
             }else {
                 this.mURL = url + "?page=" + page + "&limit=" + this.mLimit;
             }
         }else {
+            mType = "search";
             if (!(mRating.equals("all")||mRating.equals("null"))){
                 this.mURL = url + "?page=" + page + "&limit=" + this.mLimit + "&tags=rating:" + mRating + "+" + tags;
             }else {
@@ -123,7 +127,11 @@ public class GetPost {
             postBean.setCreated_at(rawPostBean.created_at * 1000);
             postBean.setCreator_id(rawPostBean.creator_id);
             postBean.setAuthor(rawPostBean.author);
-            postBean.setSource(rawPostBean.source);
+            if (!rawPostBean.source.isEmpty()){
+                postBean.setSource(rawPostBean.source);
+            }else {
+                Log.i(TAG, "rawPostBean.source.isEmpty()");
+            }
             postBean.setMd5(rawPostBean.md5);
             postBean.setScore(rawPostBean.score);
             postBean.setRating(rawPostBean.rating);
@@ -133,14 +141,22 @@ public class GetPost {
             postBean.setWidth(rawPostBean.width);
             postBean.setHeight(rawPostBean.height);
             postBean.setFile_size(rawPostBean.file_size);
-            postBean.setFile_url(rawPostBean.file_url);
+            if (!rawPostBean.file_url.isEmpty()){
+                postBean.setFile_url(rawPostBean.file_url);
+            }else {
+                Log.i(TAG,"rawPostBean.file_url");
+            }
             postBean.setPreview_url(rawPostBean.preview_url);
             postBean.setPreview_height(rawPostBean.actual_preview_height);
             postBean.setPreview_width(rawPostBean.actual_preview_width);
-            postBean.setJpeg_url(rawPostBean.jpeg_url);
-            postBean.setJpeg_height(rawPostBean.jpeg_height);
-            postBean.setJpeg_width(rawPostBean.jpeg_width);
-            postBean.setJpeg_file_size(rawPostBean.jpeg_file_size);
+            if (!rawPostBean.jpeg_url.isEmpty()){
+                postBean.setJpeg_url(rawPostBean.jpeg_url);
+                postBean.setJpeg_height(rawPostBean.jpeg_height);
+                postBean.setJpeg_width(rawPostBean.jpeg_width);
+                postBean.setJpeg_file_size(rawPostBean.jpeg_file_size);
+            }else {
+                Log.i(TAG, "jpeg is null");
+            }
             postBean.setSample_file_size(rawPostBean.sample_file_size);
             postBean.setSample_url(rawPostBean.sample_url);
             postBean.setSample_height(rawPostBean.sample_height);
@@ -172,9 +188,11 @@ public class GetPost {
         if (!jsonArray.isJsonNull()){
             //保存 json 供下次打开时读取缓存中的图片
             //只在刷新时保存
-            if (this.mPage == 1){
+            if (this.mPage == 1 && mType.equals("post")){
+                Log.i(TAG, mType);
                 new FileUtils().saveJson(string);
             }
+            Log.i(TAG, mType);
             //转换为 List<RawPostBean>
             for (JsonElement post : jsonArray){
                 RawPostBean rawPostBean = mGson.fromJson(post, RawPostBean.class);

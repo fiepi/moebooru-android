@@ -87,15 +87,15 @@ public class PostDetailFragment extends Fragment {
 
         if (getArguments() != null) {
             String type = getArguments().getString(TYPE);
-//            Log.i(TAG,type + ":" + getArguments().getInt(POS));
+            Log.i(TAG, "Type: " + type);
             if (type.equals("post")){
                 mPostBean = AppConfig.mPostBeanPostItems.get(getArguments().getInt(POS));
-//                Log.i(TAG, "post");
+                Log.i(TAG, "post");
             }
             if (type.equals("search"))
                 {
                 mPostBean = AppConfig.mPostBeanSearchItems.get(getArguments().getInt(POS));
-//                Log.i(TAG, "search");
+                Log.i(TAG, "search");
             }
         }
     }

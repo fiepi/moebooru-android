@@ -43,6 +43,7 @@ public class PostDetailActivity extends AppCompatActivity {
         mPOS = bundle.getInt(ARG_POST_ITEM_POS);
         mType = bundle.getString(ARG_POST_TYPE);
         mAdapter = new PostPagerAdapter(getSupportFragmentManager(), mType);
+        Log.i(TAG, mType);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mPOS);
     }

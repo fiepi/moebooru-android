@@ -33,7 +33,7 @@ public class PostPagerAdapter extends FragmentStatePagerAdapter{
     public int getCount() {
         int size;
         if (mType.equals("post")){
-//            Log.i(TAG, "post" + AppConfig.mPostBeanPostItems.size() );
+            Log.i(TAG, "post" + AppConfig.mPostBeanPostItems.size() );
             size = AppConfig.mPostBeanPostItems.size();
             if (mCount != size){
                 mCount = size;
@@ -42,7 +42,7 @@ public class PostPagerAdapter extends FragmentStatePagerAdapter{
             return mCount;
         }
         if (mType.equals("search")){
-//            Log.i(TAG, "search" + AppConfig.mPostBeanSearchItems.size() );
+            Log.i(TAG, "search" + AppConfig.mPostBeanSearchItems.size() );
             size = AppConfig.mPostBeanSearchItems.size();
             if (mCount != size){
                 mCount = size;
