@@ -18,6 +18,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +56,10 @@ public class MoebooruActivity extends AppCompatActivity
 
     private Toolbar mToolbar;
 
+    private NavigationView mLeftNavigationView;
+    private NavigationView mRightNavigationView;
+    private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,14 +69,14 @@ public class MoebooruActivity extends AppCompatActivity
         mToolbar.setTitle("Post");
         setSupportActionBar(mToolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView leftNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        leftNavigationView.setNavigationItemSelectedListener(this);
+        mLeftNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mLeftNavigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null){
             mFragmentManager.beginTransaction()
@@ -79,7 +84,7 @@ public class MoebooruActivity extends AppCompatActivity
                     .commit();
         }
 
-        NavigationView rightNavigationView = (NavigationView) findViewById(R.id.nav_right);
+        mRightNavigationView = (NavigationView) findViewById(R.id.nav_right);
 //        rightNavigationView.setNavigationItemSelectedListener(this);
         mTagRecyclerView = (RecyclerView) this.findViewById(R.id.rv_tags);
         mTagLayoutManager = new LinearLayoutManager(this);
@@ -88,7 +93,7 @@ public class MoebooruActivity extends AppCompatActivity
         mTagAdapter = new TagViewAdapter(this);
         mTagRecyclerView.setAdapter(mTagAdapter);
 
-        View headerView = leftNavigationView.getHeaderView(0);
+        View headerView = mLeftNavigationView.getHeaderView(0);
         LinearLayout headerInfoLayout = (LinearLayout) headerView.findViewById(R.id.layout_head_info);
         headerInfoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +101,7 @@ public class MoebooruActivity extends AppCompatActivity
                 Log.i(TAG, "点击头部信息");
                 if (mNavBooruFragment.isVisible()){
                     Log.i(TAG, "可见");
-                    FrameLayout frameLayout = (FrameLayout) leftNavigationView.findViewById(R.id.frag_nav_booru_view);
+                    FrameLayout frameLayout = (FrameLayout) mLeftNavigationView.findViewById(R.id.frag_nav_booru_view);
                     frameLayout.setVisibility(FrameLayout.GONE);
                 }else {
                     mNavBooruFragment = new NavBooruFragment();
@@ -144,10 +149,11 @@ public class MoebooruActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        }else if (mDrawerLayout.isDrawerOpen(GravityCompat.END)){
+            mDrawerLayout.closeDrawer(GravityCompat.END);
+        }else {
             super.onBackPressed();
         }
     }
@@ -291,13 +297,15 @@ public class MoebooruActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(MoebooruActivity.this, PostSearchActivity.class);
                 startActivity(intent);
+                mDrawerLayout.closeDrawer(GravityCompat.END);
             }
         });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
     }
 
     @Override
@@ -305,7 +313,8 @@ public class MoebooruActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_open_search_nav) {
+            mDrawerLayout.openDrawer(GravityCompat.END);
             return true;
         }
 
@@ -347,8 +356,7 @@ public class MoebooruActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }
