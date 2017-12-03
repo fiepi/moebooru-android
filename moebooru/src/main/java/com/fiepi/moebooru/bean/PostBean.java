@@ -27,7 +27,7 @@ public class PostBean implements Parcelable {
     private String source;
     private int score;
     private String md5;
-    private long file_size;
+    private int file_size;
     private String file_url;
     private boolean is_shown_in_index;
     private String preview_url;
@@ -182,11 +182,11 @@ public class PostBean implements Parcelable {
         this.md5 = md5;
     }
 
-    public long getFile_size() {
+    public int getFile_size() {
         return this.file_size;
     }
 
-    public void setFile_size(long file_size) {
+    public void setFile_size(int file_size) {
         this.file_size = file_size;
     }
 
@@ -446,7 +446,7 @@ public class PostBean implements Parcelable {
             this.children = null;
         }
         this.md5 = parcel.readString();
-        this.file_size = parcel.readLong();
+        this.file_size = parcel.readInt();
         this.file_url = parcel.readString();
         this.width = parcel.readInt();
         this.height = parcel.readInt();

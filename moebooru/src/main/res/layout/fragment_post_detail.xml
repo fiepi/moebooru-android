@@ -64,6 +64,8 @@
                 android:src="@drawable/ic_stat_dl"
                 android:paddingEnd="@dimen/text_left_padding"
                 android:padding="@dimen/text_padding"
+                android:clickable="true"
+                android:background="?android:selectableItemBackgroundBorderless"
                 android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

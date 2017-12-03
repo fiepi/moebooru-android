@@ -13,10 +13,10 @@
         android:id="@+id/sample_url_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="24dp">
+        android:layout_height="25dp">
         <TextView
             android:textColor="@color/white"
-            android:text="Sample:"
+            android:text="Sample"
             android:gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -27,21 +27,45 @@
             android:layout_height="wrap_content" />
 
         <ImageView
-            android:id="@+id/iv_info_sample_download"
-            android:gravity="end"
-            android:src="@drawable/ic_detail_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_info_sample_share"
+            android:padding="3dp"
+            android:id="@+id/iv_url_sample_share"
             android:gravity="end"
             android:src="@drawable/ic_detail_share"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <ImageView
-            android:id="@+id/iv_info_sample_copy"
+            android:padding="3dp"
+            android:id="@+id/iv_url_sample_copy"
             android:gravity="end"
             android:src="@drawable/ic_detail_copy"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:padding="3dp"
+            android:id="@+id/iv_url_sample_download"
+            android:gravity="end"
+            android:src="@drawable/ic_detail_download"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingStart="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="22dp">
+        <TextView
+            android:id="@+id/tv_url_sample"
+            android:textColor="@color/white"
+            android:gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -50,12 +74,11 @@
         android:id="@+id/larger_url_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="24dp">
-
+        android:layout_height="25dp">
         <TextView
             android:textColor="@color/white"
-            android:text="Larger:"
-            android:layout_gravity="start"
+            android:text="Larger"
+            android:gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -65,35 +88,59 @@
             android:layout_height="wrap_content" />
 
         <ImageView
-            android:id="@+id/iv_info_larger_download"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_detail_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_info_larger_share"
-            android:layout_gravity="end"
+            android:padding="4dp"
+            android:id="@+id/iv_url_larger_share"
+            android:gravity="end"
             android:src="@drawable/ic_detail_share"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <ImageView
-            android:id="@+id/iv_info_larger_copy"
-            android:layout_gravity="end"
+            android:padding="3dp"
+            android:id="@+id/iv_url_larger_copy"
+            android:gravity="end"
             android:src="@drawable/ic_detail_copy"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:padding="3dp"
+            android:id="@+id/iv_url_larger_download"
+            android:gravity="end"
+            android:src="@drawable/ic_detail_download"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
+        android:paddingStart="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="22dp">
+        <TextView
+            android:id="@+id/tv_url_larger"
+            android:textColor="@color/white"
+            android:gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/origin_url_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="24dp">
-
+        android:layout_height="25dp">
         <TextView
             android:textColor="@color/white"
-            android:text="Origin:"
-            android:layout_gravity="start"
+            android:text="Origin"
+            android:gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -103,21 +150,45 @@
             android:layout_height="wrap_content" />
 
         <ImageView
-            android:id="@+id/iv_info_origin_download"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_detail_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_info_origin_share"
-            android:layout_gravity="end"
+            android:padding="3dp"
+            android:id="@+id/iv_url_origin_share"
+            android:gravity="end"
             android:src="@drawable/ic_detail_share"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <ImageView
-            android:id="@+id/iv_info_origin_copy"
-            android:layout_gravity="end"
+            android:padding="3dp"
+            android:id="@+id/iv_url_origin_copy"
+            android:gravity="end"
             android:src="@drawable/ic_detail_copy"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:padding="3dp"
+            android:id="@+id/iv_url_origin_download"
+            android:gravity="end"
+            android:src="@drawable/ic_detail_download"
+            android:clickable="true"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingStart="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="22dp">
+        <TextView
+            android:id="@+id/tv_url_origin"
+            android:textColor="@color/white"
+            android:gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

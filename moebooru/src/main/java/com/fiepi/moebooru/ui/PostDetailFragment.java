@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.load.DataSource;
@@ -33,6 +34,7 @@ import com.fiepi.moebooru.glide.GlideApp;
 import com.fiepi.moebooru.R;
 import com.fiepi.moebooru.bean.PostBean;
 import com.fiepi.moebooru.ui.adapter.TagDetailViewAdapter;
+import com.fiepi.moebooru.util.ClipboardUtils;
 import com.fiepi.moebooru.util.ImgDownloadUtils;
 import com.fiepi.moebooru.util.ShareUtils;
 import com.fiepi.moebooru.util.SharedPreferencesUtils;
@@ -65,6 +67,21 @@ public class PostDetailFragment extends Fragment {
     private TextView mTextViewInfoScore;
 
     private ImageView mImageViewDL;
+
+    private TextView mTextViewSample;
+    private ImageView mImageViewSampleShare;
+    private ImageView mImageViewSampleCopy;
+    private ImageView mImageViewSampleDownload;
+
+    private TextView mTextViewLarger;
+    private ImageView mImageViewLargerShare;
+    private ImageView mImageViewLargerCopy;
+    private ImageView mImageViewLargerDownload;
+
+    private TextView mTextViewOrigin;
+    private ImageView mImageViewOriginShare;
+    private ImageView mImageViewOriginCopy;
+    private ImageView mImageViewOriginDownload;
 
     public PostDetailFragment() {
 
@@ -114,18 +131,13 @@ public class PostDetailFragment extends Fragment {
         textViewID.setText("#" + mPostBean.getId());
 
         initInfoView(rootView);
+        initUrlView(rootView);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_tags_detail);
         mTagDetailLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mTagDetailLayoutManager);
         mTagAdapter = new TagDetailViewAdapter(mPostBean.getTags());
         mRecyclerView.setAdapter(mTagAdapter);
-
-        LinearLayout originUrlLayout = (LinearLayout) rootView.findViewById(R.id.origin_url_layout);
-        LinearLayout largerUrlLayout = (LinearLayout) rootView.findViewById(R.id.larger_url_layout);
-
-        originUrlLayout.setVisibility(LinearLayout.GONE);
-        largerUrlLayout.setVisibility(LinearLayout.GONE);
 
         GlideApp.with(getContext())
                 .load(new GetGlideUrl().makeGlideUrl(mPostBean.getSample_url()))
@@ -150,6 +162,107 @@ public class PostDetailFragment extends Fragment {
         return rootView;
     }
 
+    private void initUrlView(View view){
+        mTextViewSample = (TextView) view.findViewById(R.id.tv_url_sample);
+        mImageViewSampleShare = (ImageView) view.findViewById(R.id.iv_url_sample_share);
+        mImageViewSampleCopy = (ImageView) view.findViewById(R.id.iv_url_sample_copy);
+        mImageViewSampleDownload = (ImageView) view.findViewById(R.id.iv_url_sample_download);
+        mTextViewSample.setText(mPostBean.getSample_width()
+                + "x" + mPostBean.getSample_height());
+        mImageViewSampleShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareUtils().shareText(mPostBean.getSample_url(), getActivity());
+            }
+        });
+        mImageViewSampleCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ClipboardUtils().copy(mPostBean.getSample_url(), getContext());
+                Toast.makeText(getContext(), mPostBean.getSample_url(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        mImageViewSampleDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ImgDownloadUtils(mPostBean.getSample_url(), mPostBean.getTags(), mPostBean.getId(),
+                        new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey),
+                        getActivity()).toDownload();
+            }
+        });
+
+        mTextViewLarger = (TextView) view.findViewById(R.id.tv_url_larger);
+        mImageViewLargerShare = (ImageView) view.findViewById(R.id.iv_url_larger_share);
+        mImageViewLargerCopy = (ImageView) view.findViewById(R.id.iv_url_larger_copy);
+        mImageViewLargerDownload = (ImageView) view.findViewById(R.id.iv_url_larger_download);
+        mTextViewLarger.setText(mPostBean.getJpeg_width()
+                + "x" + mPostBean.getJpeg_height());
+        mImageViewLargerShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareUtils().shareText(mPostBean.getJpeg_url(), getActivity());
+            }
+        });
+        mImageViewLargerCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ClipboardUtils().copy(mPostBean.getJpeg_url(), getContext());
+                Toast.makeText(getContext(), mPostBean.getJpeg_url(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        mImageViewLargerDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ImgDownloadUtils(mPostBean.getJpeg_url(), mPostBean.getTags(), mPostBean.getId(),
+                        new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey),
+                        getActivity()).toDownload();
+            }
+        });
+
+        mTextViewOrigin = (TextView) view.findViewById(R.id.tv_url_origin);
+        mImageViewOriginShare = (ImageView) view.findViewById(R.id.iv_url_origin_share);
+        mImageViewOriginCopy = (ImageView) view.findViewById(R.id.iv_url_origin_copy);
+        mImageViewOriginDownload = (ImageView) view.findViewById(R.id.iv_url_origin_download);
+        mTextViewOrigin.setText(mPostBean.getWidth()
+                + "x" + mPostBean.getHeight());
+        mImageViewOriginShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareUtils().shareText(mPostBean.getFile_url(), getActivity());
+            }
+        });
+        mImageViewOriginCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ClipboardUtils().copy(mPostBean.getFile_url(), getContext());
+                Toast.makeText(getContext(), mPostBean.getFile_url(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        mImageViewOriginDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ImgDownloadUtils(mPostBean.getFile_url(), mPostBean.getTags(), mPostBean.getId(),
+                        new SharedPreferencesUtils().getStringValue(booruUsedPref, booruDomainKey),
+                        getActivity()).toDownload();
+            }
+        });
+    }
+
+    private String getSize(int size){
+        int m = 0;
+        size /= 1024;
+        if (size < 1024){
+            return size + " KiB";
+        }
+        float sf = size;
+        while (sf >= 1024){
+            m++;
+            sf /= 1024;
+        }
+        sf = (float)(Math.round(sf*100))/100;
+        float s = m + sf;
+        return s + " MiB";
+    }
 
     private void initInfoView(View view){
 

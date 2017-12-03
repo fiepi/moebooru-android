@@ -11,7 +11,7 @@ public class RawPostBean {
     public int change;
     public long created_at;
     public long creator_id;
-    public long file_size;
+    public int file_size;
     public String file_url;
     public boolean has_children;
     public int height;
